@@ -49,7 +49,8 @@ Developer zaki = {
 
 | Project | Description | Tech |
 |--------|-------------|------|
-| 🎨 [**Coloristan**](https://github.com/zakiuhh) | Offline color naming web app - matches any color using RGB Euclidean distance | HTML, CSS, JS |
+| 👦🏻 [**What Next?**](https://github.com/zakiuhh/what-s-next) | BYOK AI that tells you what to do Next | HTML, CSS, JS|
+| 🎨 [**Coloristan**](https://github.com/zakiuhh/coloristan) | Offline color naming web app - matches any color using RGB Euclidean distance | HTML, CSS, JS |
 | 🤖 **Self-Balancing Robot** | Hardware + software robot that maintains balance autonomously | C++, Embedded Systems |
 | ✂️ **Rock Paper Scissors** | CLI-based game with clean game logic and score tracking | C++ |
 
