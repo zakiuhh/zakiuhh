@@ -1,35 +1,15 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { motion, Variants } from "motion/react";
+import { Metadata } from "next";
 import { Briefcase, Calendar, CheckCircle2, Youtube, Palette, Film, ArrowRight } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
-import { useAnimationSettings } from "@/context/AnimationContext";
+
+export const metadata: Metadata = {
+  title: "Experience — Zaki Ul Hassan",
+  description: "Detailed work experience, content growth milestones, graphic design leadership, and freelance video production.",
+};
 
 export default function ExperiencePage() {
-  const { animationsEnabled } = useAnimationSettings();
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
-    },
-  };
-
   const experiences = [
     {
       company: "Zulal-e-Khizar Foundation",
@@ -81,65 +61,38 @@ export default function ExperiencePage() {
     <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-5xl mx-auto">
       <AsciiDivider label="WORK_EXPERIENCE // TIMELINE" />
 
-      {/* Header Banner */}
-      {animationsEnabled ? (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-4 mt-6"
-        >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>PRODUCTION & LEADERSHIP HISTORY</span>
-          </motion.div>
-
-          <motion.h1 variants={itemVariants} className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
-            Professional Experience
-          </motion.h1>
-
-          <motion.p variants={itemVariants} className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-            Proven track record in visual brand direction, YouTube channel scaling to 20,000+ subscribers, and developer educational video production.
-          </motion.p>
-        </motion.div>
-      ) : (
-        <div className="flex flex-col gap-4 mt-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>PRODUCTION & LEADERSHIP HISTORY</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
-            Professional Experience
-          </h1>
-
-          <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-            Proven track record in visual brand direction, YouTube channel scaling to 20,000+ subscribers, and developer educational video production.
-          </p>
+      <div className="flex flex-col gap-4 mt-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
+          <Briefcase className="w-3.5 h-3.5" />
+          <span>PRODUCTION & LEADERSHIP HISTORY</span>
         </div>
-      )}
+
+        <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
+          Professional Experience
+        </h1>
+
+        <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
+          Proven track record in visual brand direction, YouTube channel scaling to 20,000+ subscribers, and developer educational video production.
+        </p>
+      </div>
 
       {/* Experience Timeline */}
       <div className="mt-12 space-y-10">
-        {experiences.map((exp, idx) => {
+        {experiences.map((exp) => {
           const Icon = exp.icon;
-          return animationsEnabled ? (
-            <motion.div
+          return (
+            <div
               key={exp.company}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: idx * 0.12 }}
-              className="p-8 rounded-3xl bg-bg-surface/90 border border-border-subtle hover:border-accent/40 transition-all shadow-xl flex flex-col gap-6 group"
+              className="p-8 rounded-3xl bg-bg-surface/90 border border-border-subtle hover:border-accent/40 transition-all shadow-xl flex flex-col gap-6"
             >
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle/60 pb-5">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-2xl bg-bg-elevated border border-border-bright text-accent shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="p-3 rounded-2xl bg-bg-elevated border border-border-bright text-accent shrink-0">
                     <Icon className="w-6 h-6" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-text-main group-hover:text-accent transition-colors">{exp.role}</h2>
+                    <h2 className="text-xl font-bold text-text-main">{exp.role}</h2>
                     <span className="text-sm text-accent dev-tag">{exp.company}</span>
                   </div>
                 </div>
@@ -159,8 +112,8 @@ export default function ExperiencePage() {
               <div className="space-y-3">
                 <h3 className="text-xs dev-tag text-text-dim">KEY_RESPONSIBILITIES_&_MILESTONES</h3>
                 <ul className="space-y-2">
-                  {exp.highlights.map((h, hIdx) => (
-                    <li key={hIdx} className="flex items-start gap-3 text-xs sm:text-sm text-text-sub">
+                  {exp.highlights.map((h, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-text-sub">
                       <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                       <span>{h}</span>
                     </li>
@@ -169,55 +122,6 @@ export default function ExperiencePage() {
               </div>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 pt-3 border-t border-border-subtle/40">
-                {exp.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-lg bg-bg-elevated text-xs dev-tag text-text-dim border border-border-subtle"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ) : (
-            <div
-              key={exp.company}
-              className="p-8 rounded-3xl bg-bg-surface border border-border-subtle shadow-xl flex flex-col gap-6"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle/60 pb-5">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-2xl bg-bg-elevated border border-border-bright text-accent shrink-0">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-text-main">{exp.role}</h2>
-                    <span className="text-sm text-accent dev-tag">{exp.company}</span>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-bg-elevated border border-accent/20 text-xs dev-tag text-accent self-start sm:self-auto">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{exp.period}</span>
-                </div>
-              </div>
-
-              <p className="text-sm text-text-sub leading-relaxed font-sans">
-                {exp.summary}
-              </p>
-
-              <div className="space-y-3">
-                <h3 className="text-xs dev-tag text-text-dim">KEY_RESPONSIBILITIES_&_MILESTONES</h3>
-                <ul className="space-y-2">
-                  {exp.highlights.map((h, hIdx) => (
-                    <li key={hIdx} className="flex items-start gap-3 text-xs sm:text-sm text-text-sub">
-                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
               <div className="flex flex-wrap gap-2 pt-3 border-t border-border-subtle/40">
                 {exp.tags.map((tag) => (
                   <span
@@ -241,7 +145,7 @@ export default function ExperiencePage() {
         </div>
         <Link
           href="/contact"
-          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all shrink-0 hover:scale-105"
+          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all shrink-0"
         >
           <span>GET_IN_TOUCH</span>
           <ArrowRight className="w-4 h-4" />

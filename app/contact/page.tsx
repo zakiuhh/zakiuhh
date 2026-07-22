@@ -1,35 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, Variants } from "motion/react";
+import { Metadata } from "next";
 import { Mail, Copy, Check, Github, Linkedin, Send, Terminal, ArrowUpRight, MapPin, Globe } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
-import { useAnimationSettings } from "@/context/AnimationContext";
 
 export default function ContactPage() {
-  const { animationsEnabled } = useAnimationSettings();
   const [copied, setCopied] = useState(false);
   const email = "zakiulhassan105@gmail.com";
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
-    },
-  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email);
@@ -41,208 +19,97 @@ export default function ContactPage() {
     <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-6xl mx-auto">
       <AsciiDivider label="INITIATE_COMMUNICATION // CONTACT_DIRECTORY" />
 
-      {/* Header Banner */}
-      {animationsEnabled ? (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-4 mt-6"
-        >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>OPEN FOR FREELANCE & COLLABORATION</span>
-          </motion.div>
-
-          <motion.h1 variants={itemVariants} className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
-            Contact Details & Inquiries
-          </motion.h1>
-
-          <motion.p variants={itemVariants} className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-            Reach out for zero-dependency web development, developer video editing, graphic design projects, or AI integration consulting.
-          </motion.p>
-        </motion.div>
-      ) : (
-        <div className="flex flex-col gap-4 mt-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>OPEN FOR FREELANCE & COLLABORATION</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
-            Contact Details & Inquiries
-          </h1>
-
-          <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-            Reach out for zero-dependency web development, developer video editing, graphic design projects, or AI integration consulting.
-          </p>
+      <div className="flex flex-col gap-4 mt-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
+          <Terminal className="w-3.5 h-3.5" />
+          <span>OPEN FOR FREELANCE & COLLABORATION</span>
         </div>
-      )}
+
+        <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
+          Contact Details & Inquiries
+        </h1>
+
+        <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
+          Reach out for zero-dependency web development, developer video editing, graphic design projects, or AI integration consulting.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-12 items-start">
         {/* Left Column: Direct Info & Social Cards */}
         <div className="lg:col-span-6 flex flex-col gap-6">
           {/* Direct Copy Box */}
-          {animationsEnabled ? (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl"
-            >
-              <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                PRIMARY_EMAIL_ADDRESS
-              </h2>
+          <div className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl">
+            <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              PRIMARY_EMAIL_ADDRESS
+            </h2>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-bg-elevated border border-border-subtle">
-                <span className="text-sm font-bold text-text-main font-mono">{email}</span>
-                <button
-                  onClick={handleCopy}
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-bright text-xs dev-tag text-text-main hover:text-accent hover:border-accent/60 transition-all active:scale-95 shrink-0"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-accent" />
-                      <span className="text-accent">COPIED</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-text-dim" />
-                      <span>COPY</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </motion.div>
-          ) : (
-            <div className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl">
-              <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                PRIMARY_EMAIL_ADDRESS
-              </h2>
-
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-bg-elevated border border-border-subtle">
-                <span className="text-sm font-bold text-text-main font-mono">{email}</span>
-                <button
-                  onClick={handleCopy}
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-bright text-xs dev-tag text-text-main hover:text-accent hover:border-accent/60 transition-all active:scale-95 shrink-0"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-accent" />
-                      <span className="text-accent">COPIED</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-text-dim" />
-                      <span>COPY</span>
-                    </>
-                  )}
-                </button>
-              </div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-bg-elevated border border-border-subtle">
+              <span className="text-sm font-bold text-text-main font-mono">{email}</span>
+              <button
+                onClick={handleCopy}
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-bright text-xs dev-tag text-text-main hover:text-accent hover:border-accent/60 transition-all active:scale-95 shrink-0"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-accent" />
+                    <span className="text-accent">COPIED</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-text-dim" />
+                    <span>COPY</span>
+                  </>
+                )}
+              </button>
             </div>
-          )}
+          </div>
 
           {/* Social Profiles */}
-          {animationsEnabled ? (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl"
-            >
-              <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                SOCIAL_CHANNELS
-              </h2>
+          <div className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl">
+            <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
+              <Globe className="w-4 h-4" />
+              SOCIAL_CHANNELS
+            </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a
-                  href="https://github.com/zakiuhh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between hover:scale-[1.02]"
-                >
-                  <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
-                    <Github className="w-5 h-5" />
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-xs dev-tag text-text-dim">GITHUB</span>
-                    <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
-                      zakiuhh
-                    </p>
-                  </div>
-                </a>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <a
+                href="https://github.com/zakiuhh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
+                  <Github className="w-5 h-5" />
+                  <ArrowUpRight className="w-4 h-4" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-xs dev-tag text-text-dim">GITHUB</span>
+                  <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
+                    zakiuhh
+                  </p>
+                </div>
+              </a>
 
-                <a
-                  href="https://linkedin.com/in/zakiuh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between hover:scale-[1.02]"
-                >
-                  <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
-                    <Linkedin className="w-5 h-5" />
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-xs dev-tag text-text-dim">LINKEDIN</span>
-                    <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
-                      in/zakiuh
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </motion.div>
-          ) : (
-            <div className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-4 shadow-xl">
-              <h2 className="text-sm font-semibold dev-tag text-accent flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                SOCIAL_CHANNELS
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a
-                  href="https://github.com/zakiuhh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between"
-                >
-                  <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
-                    <Github className="w-5 h-5" />
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-xs dev-tag text-text-dim">GITHUB</span>
-                    <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
-                      zakiuhh
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://linkedin.com/in/zakiuh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between"
-                >
-                  <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
-                    <Linkedin className="w-5 h-5" />
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-xs dev-tag text-text-dim">LINKEDIN</span>
-                    <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
-                      in/zakiuh
-                    </p>
-                  </div>
-                </a>
-              </div>
+              <a
+                href="https://linkedin.com/in/zakiuh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 rounded-2xl bg-bg-elevated border border-border-subtle hover:border-accent/50 transition-all group flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between text-text-dim group-hover:text-accent">
+                  <Linkedin className="w-5 h-5" />
+                  <ArrowUpRight className="w-4 h-4" />
+                </div>
+                <div className="mt-4">
+                  <span className="text-xs dev-tag text-text-dim">LINKEDIN</span>
+                  <p className="text-sm font-semibold text-text-main group-hover:text-accent transition-colors font-mono">
+                    in/zakiuh
+                  </p>
+                </div>
+              </a>
             </div>
-          )}
+          </div>
 
           {/* Location & Status Info */}
           <div className="p-6 rounded-3xl bg-bg-surface border border-border-subtle flex flex-col gap-3 text-xs dev-tag text-text-sub">
@@ -316,7 +183,7 @@ export default function ContactPage() {
 
             <button
               type="submit"
-              className="w-full py-4 rounded-xl bg-accent text-black font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all flex items-center justify-center gap-2 mt-2 hover:scale-[1.01] active:scale-[0.99]"
+              className="w-full py-4 rounded-xl bg-accent text-black font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all flex items-center justify-center gap-2 mt-2"
             >
               <Send className="w-4 h-4" />
               <span>Launch Email Client</span>

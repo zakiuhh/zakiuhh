@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { motion } from "motion/react";
-import { Code2, Palette, Terminal, Cpu, Layers, Sparkles, Sliders, Box, Bot, ArrowRight } from "lucide-react";
+import { Code2, Palette, Terminal, Cpu, Layers, Sparkles, Sliders, Box, Bot } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 import { useAnimationSettings } from "@/context/AnimationContext";
 
@@ -11,64 +10,87 @@ export const SkillsSection: React.FC = () => {
   const { animationsEnabled } = useAnimationSettings();
 
   const technicalSkills = [
-    { name: "HTML5 & CSS3", desc: "Native Web Layouts", icon: Code2 },
-    { name: "Vanilla JavaScript (ES6+)", desc: "Zero-Dependency Logic", icon: Terminal },
-    { name: "Python", desc: "Scripting & Automation", icon: Cpu },
-    { name: "AI Tools & APIs", desc: "Groq, Anthropic, Mistral", icon: Bot },
+    { name: "HTML5 & Semantic Markup", desc: "Native Web Standard Layouts", icon: Code2 },
+    { name: "CSS3 & Custom Variables", desc: "Responsive Design & Animations", icon: Layers },
+    { name: "Vanilla JavaScript (ES6+)", desc: "Zero-Dependency Logic & DOM API", icon: Terminal },
+    { name: "Python", desc: "Scripting & Automation Utilities", icon: Cpu },
+    { name: "AI Tools & LLM Integration", desc: "Groq, Anthropic, Mistral APIs", icon: Bot },
+    { name: "Prompt Engineering", desc: "Structured Prompt Design", icon: Sparkles },
   ];
 
   const creativeSkills = [
-    { name: "Video Editing", desc: "Educational & Tech Content", icon: Sliders },
-    { name: "CapCut & Post Pipelines", desc: "YouTube Content Management", icon: Box },
-    { name: "Graphic Design", desc: "Campaign Brand Identity", icon: Palette },
+    { name: "Video Editing", desc: "Educational & Promotional Content", icon: Sliders },
+    { name: "CapCut & Motion Pipelines", desc: "High-Growth YouTube Production", icon: Box },
+    { name: "Graphic Design", desc: "Outreach & Event Brand Identity", icon: Palette },
     { name: "Adobe Illustrator", desc: "Vector Design & Typography", icon: Layers },
+    { name: "Canva Pro", desc: "Rapid Campaign Asset Creation", icon: Box },
   ];
 
   return (
-    <section id="skills" className="py-16 px-6 md:px-12 max-w-7xl mx-auto relative">
+    <section id="skills" className="py-20 px-6 md:px-12 max-w-7xl mx-auto relative">
       <AsciiDivider label="SKILLS_MATRIX" />
 
-      <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-accent dev-tag text-xs">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>CAPABILITY_INDEX // TECHNICAL & CREATIVE</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">
-            Technical & Creative Core
-          </h2>
+      <div className="mt-8 flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-accent dev-tag text-xs">
+          <Terminal className="w-3.5 h-3.5" />
+          <span>CAPABILITY_INDEX // TECHNICAL & CREATIVE</span>
         </div>
-        <Link
-          href="/skills"
-          className="inline-flex items-center gap-2 text-xs dev-tag text-accent hover:underline font-semibold"
-        >
-          <span>VIEW_FULL_SKILL_MATRIX</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
+        <h2 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">
+          Core Engineering & Creative Skillset
+        </h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
         {/* Technical Column */}
-        <div className="p-5 rounded-2xl bg-bg-surface/90 border border-border-subtle flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-xs font-semibold dev-tag text-accent border-b border-border-subtle pb-3">
+        <div className="p-6 rounded-2xl bg-bg-surface/90 border border-border-subtle flex flex-col gap-6">
+          <div className="flex items-center gap-2 text-sm font-semibold dev-tag text-accent border-b border-border-subtle pb-4">
             <Code2 className="w-4 h-4" />
-            <span>DEVELOPMENT_&_SYSTEMS</span>
+            <span>DEV & SYSTEM_CAPABILITIES</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {technicalSkills.map((skill) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {technicalSkills.map((skill, idx) => {
               const Icon = skill.icon;
-              return (
+              return animationsEnabled ? (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  className="p-4 rounded-xl bg-bg-elevated/70 border border-border-subtle hover:border-accent/40 transition-all group"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-bg-surface text-accent group-hover:scale-110 transition-transform">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-text-main group-hover:text-accent transition-colors">
+                        {skill.name}
+                      </span>
+                      <span className="text-[11px] text-text-dim dev-tag mt-0.5">
+                        {skill.desc}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
                 <div
                   key={skill.name}
-                  className="p-3.5 rounded-xl bg-bg-elevated/70 border border-border-subtle flex items-start gap-3"
+                  className="p-4 rounded-xl bg-bg-elevated/70 border border-border-subtle"
                 >
-                  <div className="p-2 rounded-lg bg-bg-surface text-accent shrink-0">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-text-main">{skill.name}</span>
-                    <span className="text-[10px] text-text-dim dev-tag mt-0.5">{skill.desc}</span>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-bg-surface text-accent">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-text-main">
+                        {skill.name}
+                      </span>
+                      <span className="text-[11px] text-text-dim dev-tag mt-0.5">
+                        {skill.desc}
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
@@ -77,26 +99,55 @@ export const SkillsSection: React.FC = () => {
         </div>
 
         {/* Creative Column */}
-        <div className="p-5 rounded-2xl bg-bg-surface/90 border border-border-subtle flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-xs font-semibold dev-tag text-accent border-b border-border-subtle pb-3">
+        <div className="p-6 rounded-2xl bg-bg-surface/90 border border-border-subtle flex flex-col gap-6">
+          <div className="flex items-center gap-2 text-sm font-semibold dev-tag text-accent border-b border-border-subtle pb-4">
             <Palette className="w-4 h-4" />
-            <span>CREATIVE_&_MEDIA_DIRECTION</span>
+            <span>CREATIVE & MEDIA_DIRECTION</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {creativeSkills.map((skill) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {creativeSkills.map((skill, idx) => {
               const Icon = skill.icon;
-              return (
+              return animationsEnabled ? (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  className="p-4 rounded-xl bg-bg-elevated/70 border border-border-subtle hover:border-accent/40 transition-all group"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-bg-surface text-accent group-hover:scale-110 transition-transform">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-text-main group-hover:text-accent transition-colors">
+                        {skill.name}
+                      </span>
+                      <span className="text-[11px] text-text-dim dev-tag mt-0.5">
+                        {skill.desc}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
                 <div
                   key={skill.name}
-                  className="p-3.5 rounded-xl bg-bg-elevated/70 border border-border-subtle flex items-start gap-3"
+                  className="p-4 rounded-xl bg-bg-elevated/70 border border-border-subtle"
                 >
-                  <div className="p-2 rounded-lg bg-bg-surface text-accent shrink-0">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-text-main">{skill.name}</span>
-                    <span className="text-[10px] text-text-dim dev-tag mt-0.5">{skill.desc}</span>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-bg-surface text-accent">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-semibold text-text-main">
+                        {skill.name}
+                      </span>
+                      <span className="text-[11px] text-text-dim dev-tag mt-0.5">
+                        {skill.desc}
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
