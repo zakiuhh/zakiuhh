@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
-import { Briefcase, Calendar, CheckCircle2, Youtube, Palette, Film } from "lucide-react";
+import { Briefcase, Calendar, CheckCircle2, Youtube, Palette, Film, ArrowRight } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 import { useAnimationSettings } from "@/context/AnimationContext";
 
@@ -15,107 +16,93 @@ export const ExperienceSection: React.FC = () => {
       role: "Co-Director & Graphics Team Volunteer",
       period: "2024 – Present",
       icon: Palette,
-      highlights: [
-        "Leads graphic design direction for foundation campaigns and outreach events.",
-        "Produced complete visual asset suite for the 'Path of Humanity' flagship outreach event.",
-        "Mentors junior graphic designers in visual branding, grid typography, and layout composition.",
-      ],
+      highlight: "Leads graphic design direction for campaigns and produced full visual asset package for 'Path of Humanity'.",
       tags: ["Graphic Design", "Adobe Illustrator", "Canva", "Team Leadership"],
     },
     {
       company: "KIPS MDCAT PREP",
-      role: "Video Editor & Content Manager (YouTube Channel)",
+      role: "Video Editor & Content Manager (YouTube)",
       period: "2023 – 2024",
       icon: Youtube,
-      highlights: [
-        "Scaled educational YouTube channel to 20,000+ active subscribers.",
-        "Achieved full channel monetization threshold within 1 month of management.",
-        "Executed high-CTR custom thumbnail design, YouTube SEO optimization, and scheduled publishing pipeline.",
-      ],
+      highlight: "Grew channel to 20,000+ active subscribers and monetized within one month with custom thumbnails & SEO.",
       tags: ["CapCut", "Video Editing", "YouTube SEO", "Content Management"],
     },
     {
       company: "Freelance Video Editor",
-      role: "Motion Graphics & Educational Content Specialist",
+      role: "Motion Graphics & Tech Content Specialist",
       period: "2023 – 2024",
       icon: Film,
-      highlights: [
-        "Delivered 4 complete, long-form video projects for developer educational tech series.",
-        "Produced Frontend Web Dev Roadmap, Intro to Programming, and Variables in Programming episodes.",
-        "Managed end-to-end production pipeline: script alignment, motion graphics, audio mastering, and color grading.",
-      ],
+      highlight: "Delivered 4 long-form video episodes for developer educational roadmap series with motion graphics.",
       tags: ["Video Editing", "Motion Graphics", "Tech Content", "Color Grading"],
     },
   ];
 
   return (
-    <section id="experience" className="py-20 px-6 md:px-12 max-w-7xl mx-auto relative">
-      <AsciiDivider label="WORK_EXPERIENCE" />
+    <section id="experience" className="py-16 px-6 md:px-12 max-w-7xl mx-auto relative">
+      <AsciiDivider label="WORK_EXPERIENCE // 3_ROLES" />
 
-      <div className="mt-8 flex flex-col gap-3">
-        <div className="flex items-center gap-2 text-accent dev-tag text-xs">
-          <Briefcase className="w-3.5 h-3.5" />
-          <span>CAREER_TIMELINE // 3 ROLES</span>
+      <div className="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 text-accent dev-tag text-xs">
+            <Briefcase className="w-3.5 h-3.5" />
+            <span>CAREER_TIMELINE // HIGHLIGHTS</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">
+            Production & Leadership Experience
+          </h2>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold text-text-main tracking-tight">
-          Hands-on Leadership & Production Experience
-        </h2>
-        <p className="text-text-sub text-base max-w-2xl">
-          Real impact across graphic design direction, high-growth YouTube channel editing, and developer educational content pipelines.
-        </p>
+        <Link
+          href="/experience"
+          className="inline-flex items-center gap-2 text-xs dev-tag text-accent hover:underline font-semibold"
+        >
+          <span>VIEW_FULL_CAREER_TIMELINE</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
-      {/* Vertical Timeline Container */}
-      <div className="mt-12 relative border-l border-border-subtle/80 ml-4 md:ml-8 pl-6 md:pl-10 space-y-12">
+      {/* Timeline Cards */}
+      <div className="mt-8 relative border-l border-border-subtle/80 ml-4 md:ml-8 pl-6 md:pl-10 space-y-6">
         {experiences.map((exp, idx) => {
           const Icon = exp.icon;
           return (
             <div key={exp.company} className="relative group">
-              {/* Timeline Node Point */}
               <div className="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-bg-surface border border-accent/60 flex items-center justify-center text-accent group-hover:border-accent group-hover:scale-125 transition-all shadow-[0_0_10px_rgba(0,255,136,0.2)]">
                 <Icon className="w-3 h-3" />
               </div>
 
               {animationsEnabled ? (
                 <motion.div
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -15 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.4, delay: idx * 0.15 }}
-                  className="p-6 rounded-2xl bg-bg-surface/90 border border-border-subtle hover:border-accent/40 transition-all shadow-lg"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: idx * 0.1 }}
+                  className="p-5 rounded-2xl bg-bg-surface/90 border border-border-subtle hover:border-accent/40 transition-all shadow-lg"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle/60 pb-4 mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle/60 pb-3 mb-3">
                     <div>
-                      <h3 className="text-lg font-bold text-text-main group-hover:text-accent transition-colors">
+                      <h3 className="text-base font-bold text-text-main group-hover:text-accent transition-colors">
                         {exp.role}
                       </h3>
-                      <span className="text-sm text-text-sub font-medium">
+                      <span className="text-xs text-text-sub font-medium">
                         {exp.company}
                       </span>
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-bg-elevated text-xs dev-tag text-accent border border-accent/20 self-start sm:self-auto">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-bg-elevated text-[11px] dev-tag text-accent border border-accent/20 self-start sm:self-auto">
                       <Calendar className="w-3 h-3" />
                       <span>{exp.period}</span>
                     </div>
                   </div>
 
-                  {/* Highlights Bullet List */}
-                  <ul className="space-y-2.5 mb-5">
-                    {exp.highlights.map((item, hIdx) => (
-                      <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-text-sub">
-                        <CheckCircle2 className="w-4 h-4 text-accent/80 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="text-xs text-text-sub mb-3 font-sans leading-relaxed">
+                    {exp.highlight}
+                  </p>
 
-                  {/* Monospace Tags */}
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border-subtle/40">
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border-subtle/40">
                     {exp.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 rounded bg-bg-elevated text-[11px] dev-tag text-text-dim border border-border-subtle"
+                        className="px-2 py-0.5 rounded bg-bg-elevated text-[10px] dev-tag text-text-dim border border-border-subtle"
                       >
                         #{tag}
                       </span>
@@ -123,33 +110,28 @@ export const ExperienceSection: React.FC = () => {
                   </div>
                 </motion.div>
               ) : (
-                <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle shadow-lg">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle/60 pb-4 mb-4">
+                <div className="p-5 rounded-2xl bg-bg-surface border border-border-subtle shadow-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle/60 pb-3 mb-3">
                     <div>
-                      <h3 className="text-lg font-bold text-text-main">{exp.role}</h3>
-                      <span className="text-sm text-text-sub font-medium">{exp.company}</span>
+                      <h3 className="text-base font-bold text-text-main">{exp.role}</h3>
+                      <span className="text-xs text-text-sub font-medium">{exp.company}</span>
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-bg-elevated text-xs dev-tag text-accent border border-accent/20">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-bg-elevated text-[11px] dev-tag text-accent border border-accent/20">
                       <Calendar className="w-3 h-3" />
                       <span>{exp.period}</span>
                     </div>
                   </div>
 
-                  <ul className="space-y-2.5 mb-5">
-                    {exp.highlights.map((item, hIdx) => (
-                      <li key={hIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-text-sub">
-                        <CheckCircle2 className="w-4 h-4 text-accent/80 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="text-xs text-text-sub mb-3 font-sans leading-relaxed">
+                    {exp.highlight}
+                  </p>
 
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border-subtle/40">
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border-subtle/40">
                     {exp.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 rounded bg-bg-elevated text-[11px] dev-tag text-text-dim border border-border-subtle"
+                        className="px-2 py-0.5 rounded bg-bg-elevated text-[10px] dev-tag text-text-dim border border-border-subtle"
                       >
                         #{tag}
                       </span>
