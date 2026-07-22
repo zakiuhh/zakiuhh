@@ -29,7 +29,7 @@ export default function ProjectsIndexPage() {
       <div className="flex flex-col gap-4 mt-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
           <Code className="w-3.5 h-3.5" />
-          <span>7 SHIPPED PROJECTS // DEV TOOLS, VANILLA & TEAM SOFTWARE</span>
+          <span>6 SHIPPED PROJECTS // DEV TOOLS, VANILLA & TEAM SOFTWARE</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">

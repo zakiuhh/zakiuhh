@@ -166,31 +166,6 @@ export const PROJECTS: Project[] = [
     year: "2024",
     role: "Creator & Lead Developer",
   },
-  {
-    slug: "decky-cap-docs",
-    title: "DECKY CAP Docs",
-    subtitle: "Interactive single-page documentation site for an autonomous aerial platform",
-    description:
-      "9-section single-page documentation site with custom magnetic cursor physics, IntersectionObserver scroll animations, collapsible sidebar with localStorage, and live accent color picker.",
-    fullDescription:
-      "DECKY CAP Docs is a futuristic, highly interactive technical documentation web app created for a conceptual autonomous aerial platform (CAP). It packs sophisticated interactive UI engineering — including custom spring-physics magnetic cursor motion, real-time accent color theme shifting, keyboard navigation shortcuts, and stateful sidebars — into a zero-framework codebase.",
-    githubUrl: "https://github.com/zakiuhh/deckyDocu",
-    previewImage: "/projects/decky-cap-docs.svg",
-    category: "vanilla",
-    tags: ["HTML5", "Vanilla JS", "IntersectionObserver", "Custom CSS Variables", "Physics Engine"],
-    features: [
-      "9 comprehensive technical documentation sections with deep linking",
-      "Custom canvas/DOM magnetic cursor physics with spring acceleration",
-      "IntersectionObserver triggered scroll reveals and sidebar progress tracker",
-      "Live CSS variable accent color picker with instant site-wide restyling",
-      "Collapsible sidebar state persisted across user sessions in localStorage",
-      "Keyboard shortcut navigation (Cmd/Ctrl + K, arrow keys)",
-    ],
-    architectureNotes:
-      "Handcrafted using modular JavaScript ES modules, requestAnimationFrame physics loop for smooth cursor tracking, and CSS variable tokens for dynamic theme switching.",
-    year: "2024",
-    role: "Creator & UI/UX Developer",
-  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
