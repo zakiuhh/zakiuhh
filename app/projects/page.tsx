@@ -70,23 +70,34 @@ export default function ProjectsIndexPage() {
             className="flex flex-col justify-between p-6 rounded-3xl bg-bg-surface/90 border border-border-subtle hover:border-accent/60 transition-all duration-300 group shadow-xl"
           >
             <div>
-              {/* Header Box */}
-              <div className="w-full h-32 rounded-2xl bg-bg-base border border-border-subtle p-4 font-mono text-xs text-accent/80 flex flex-col justify-between mb-5 select-none">
-                <div className="flex items-center justify-between text-text-dim text-[11px] pb-2 border-b border-border-subtle/40">
-                  <span className="flex items-center gap-1.5 text-accent font-semibold">
-                    <Terminal className="w-3.5 h-3.5" />
-                    {project.slug}
-                  </span>
-                  <span>{project.year}</span>
+              {/* Top Header Window Frame with Repository Preview Image */}
+              <div className="w-full h-44 rounded-2xl bg-bg-base border border-border-subtle overflow-hidden flex flex-col relative select-none mb-5 group/img">
+                <div className="flex items-center justify-between px-3 py-2 bg-bg-elevated/90 border-b border-border-subtle/60 text-[10px] dev-tag text-text-dim">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-500/70" />
+                    <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
+                    <span className="w-2 h-2 rounded-full bg-green-500/70" />
+                    <span className="ml-1 text-text-sub font-semibold">{project.slug}</span>
+                  </div>
+                  <span className="text-accent/80 font-mono">{project.year}</span>
                 </div>
-                <div className="text-text-sub text-[11px]">
-                  &gt; CAT: {project.category.toUpperCase()}
-                  <br />
-                  &gt; STACK: {project.tags.slice(0, 2).join(" // ")}
-                </div>
-                <div className="flex items-center justify-between text-[10px] text-text-dim pt-2 border-t border-border-subtle/40">
-                  <span>{project.role}</span>
-                  <Sparkles className="w-3 h-3 text-accent/50" />
+
+                <div className="relative flex-1 w-full overflow-hidden bg-bg-surface">
+                  {project.previewImage ? (
+                    // eslint-disable-next-next/no-img-element
+                    <img
+                      src={project.previewImage}
+                      alt={`${project.title} Preview`}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xs dev-tag text-text-dim">
+                      <Terminal className="w-4 h-4 text-accent mr-2" />
+                      {project.slug}
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-base/80 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
 

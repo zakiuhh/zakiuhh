@@ -10,8 +10,6 @@ import { useAnimationSettings } from "@/context/AnimationContext";
 
 export const ProjectsSection: React.FC = () => {
   const { animationsEnabled } = useAnimationSettings();
-
-  // Take top 3 featured projects for homepage
   const featuredProjects = PROJECTS.slice(0, 3);
 
   return (
@@ -29,7 +27,6 @@ export const ProjectsSection: React.FC = () => {
           </h2>
         </div>
 
-        {/* View All Projects Button */}
         <Link
           href="/projects"
           className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-bg-surface border border-border-bright text-xs dev-tag text-text-main hover:border-accent/60 hover:text-accent transition-all duration-200 self-start md:self-auto"
@@ -63,14 +60,6 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, animationsEnabled }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const asciiArtMockup = [
-    `+-------------------------+`,
-    `| [0x] ${project.title.toUpperCase().slice(0, 15).padEnd(15)} |`,
-    `| > STACK: ${project.tags[0]} |`,
-    `| <// VANILLA_CORE //>    |`,
-    `+-------------------------+`,
-  ].join("\n");
-
   const cardContent = (
     <div
       onMouseEnter={() => setIsHovered(true)}
@@ -84,30 +73,36 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, animationsEna
       />
 
       <div>
-        {/* Top Header Card ASCII Preview */}
-        <div className="w-full h-32 rounded-xl bg-bg-base border border-border-subtle p-3.5 font-mono text-[10px] leading-tight text-accent/80 flex flex-col justify-between relative overflow-hidden select-none mb-5">
-          <div className="flex items-center justify-between text-text-dim text-[10px] pb-1.5 border-b border-border-subtle/40">
-            <span className="flex items-center gap-1 text-accent font-semibold">
-              <Terminal className="w-3 h-3" />
-              {project.slug}
-            </span>
-            <span className="text-accent/60">{project.year}</span>
+        {/* Top Header Window Frame with Repository Preview Image */}
+        <div className="w-full h-44 rounded-xl bg-bg-base border border-border-subtle overflow-hidden flex flex-col relative select-none mb-5 group/img">
+          {/* Top Window Bar */}
+          <div className="flex items-center justify-between px-3 py-2 bg-bg-elevated/90 border-b border-border-subtle/60 text-[10px] dev-tag text-text-dim">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-red-500/70" />
+              <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
+              <span className="w-2 h-2 rounded-full bg-green-500/70" />
+              <span className="ml-1 text-text-sub font-semibold">{project.slug}</span>
+            </div>
+            <span className="text-accent/80 font-mono">{project.year}</span>
           </div>
 
-          <pre className="text-accent/70 transition-colors group-hover:text-accent overflow-hidden font-mono text-[10px] leading-snug">
-            {isHovered ? (
-              <div className="text-accent animate-pulse">
-                {`[RUNNING: ${project.slug.toUpperCase()}]\n` +
-                  project.features.slice(0, 2).map((f) => `* ${f.slice(0, 28)}...`).join("\n")}
-              </div>
+          {/* Repository Preview Image Container */}
+          <div className="relative flex-1 w-full overflow-hidden bg-bg-surface">
+            {project.previewImage ? (
+              // eslint-disable-next-next/no-img-element
+              <img
+                src={project.previewImage}
+                alt={`${project.title} Preview`}
+                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
             ) : (
-              asciiArtMockup
+              <div className="w-full h-full flex items-center justify-center text-xs dev-tag text-text-dim">
+                <Terminal className="w-4 h-4 text-accent mr-2" />
+                {project.slug}
+              </div>
             )}
-          </pre>
-
-          <div className="flex items-center justify-between text-[10px] text-text-dim pt-1.5 border-t border-border-subtle/40">
-            <span>READY</span>
-            <Sparkles className="w-3 h-3 text-accent/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg-base/80 via-transparent to-transparent pointer-events-none" />
           </div>
         </div>
 

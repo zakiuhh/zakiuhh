@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Github, Terminal, CheckCircle2, Cpu, Calendar, User } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Terminal, CheckCircle2, Cpu, Calendar, User, Layers } from "lucide-react";
 import { getProjectBySlug, PROJECTS } from "@/lib/projectsData";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 
@@ -34,7 +34,6 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
-  // Next.js 15+ Async params resolution
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
@@ -46,7 +45,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-5xl mx-auto">
       {/* Back Button Link */}
       <Link
-        href="/#projects"
+        href="/projects"
         className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-subtle text-xs dev-tag text-text-sub hover:text-accent hover:border-accent/40 transition-all mb-8 group"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -56,28 +55,24 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       <AsciiDivider label={`PROJECT_SPEC // ${project.slug.toUpperCase()}`} />
 
       {/* Main Header Card */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-bg-surface/90 border border-border-subtle shadow-2xl flex flex-col gap-6 mt-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-8 text-accent/10 pointer-events-none select-none font-mono text-8xl font-black">
-          0x0{project.slug.length}
-        </div>
-
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border-subtle/60 pb-6">
+      <div className="p-6 sm:p-10 rounded-3xl bg-bg-surface/90 border border-border-subtle shadow-2xl flex flex-col gap-6 mt-4 relative">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border-subtle/60 pb-6">
           <div className="flex flex-col gap-2">
-            <h1 className="text-4xl sm:text-5xl font-bold text-text-main tracking-tight">
+            <h1 className="text-3xl sm:text-5xl font-bold text-text-main tracking-tight">
               {project.title}
             </h1>
-            <p className="text-base text-accent dev-tag font-medium">
+            <p className="text-sm sm:text-base text-accent dev-tag font-medium">
               {project.subtitle}
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-bg-elevated border border-border-bright text-xs dev-tag text-text-main hover:text-accent hover:border-accent/50 transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-bg-elevated border border-border-bright text-xs dev-tag text-text-main hover:text-accent hover:border-accent/50 transition-all shadow-md"
               >
                 <Github className="w-4 h-4" />
                 <span>GitHub Repository</span>
@@ -97,8 +92,32 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </div>
 
+        {/* Featured Repository Preview Image Card */}
+        {project.previewImage && (
+          <div className="w-full rounded-2xl bg-bg-base border border-border-subtle overflow-hidden shadow-xl flex flex-col my-2">
+            <div className="flex items-center justify-between px-4 py-2.5 bg-bg-elevated/90 border-b border-border-subtle/60 text-xs dev-tag text-text-dim">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                <span className="ml-2 text-text-sub font-mono">{project.githubUrl || project.slug}</span>
+              </div>
+              <span className="text-accent/80 font-mono">PREVIEW</span>
+            </div>
+
+            <div className="w-full max-h-[420px] overflow-hidden bg-bg-surface">
+              {/* eslint-disable-next-next/no-img-element */}
+              <img
+                src={project.previewImage}
+                alt={`${project.title} Repository Preview`}
+                className="w-full h-full object-cover object-top hover:scale-[1.01] transition-transform duration-300"
+              />
+            </div>
+          </div>
+        )}
+
         {/* Project Meta Info Pills */}
-        <div className="flex flex-wrap items-center gap-6 text-xs dev-tag text-text-dim">
+        <div className="flex flex-wrap items-center gap-6 text-xs dev-tag text-text-dim pt-2">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-accent" />
             <span>YEAR: {project.year}</span>
@@ -108,8 +127,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <span>ROLE: {project.role}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-accent" />
-            <span>RUNTIME: ZERO_DEPENDENCY_DOM</span>
+            <Layers className="w-4 h-4 text-accent" />
+            <span>CATEGORY: {project.category.toUpperCase()}</span>
           </div>
         </div>
 
@@ -169,10 +188,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
             <div className="mt-4 p-4 rounded-xl bg-bg-base border border-border-subtle font-mono text-xs text-accent/80 space-y-1 select-none">
               <div>// CODEBASE MATRIX</div>
-              <div>Frameworks: 0.00%</div>
-              <div>External Libs: 0.00%</div>
-              <div>Browser Native APIs: 100.00%</div>
-              <div>DOM Performance Index: 99/100</div>
+              <div>Category: {project.category.toUpperCase()}</div>
+              <div>Status: DEPLOYED_ONLINE</div>
+              <div>Source: {project.githubUrl ? "PUBLIC_REPO" : "LOCAL_DEV"}</div>
             </div>
           </div>
         </div>
