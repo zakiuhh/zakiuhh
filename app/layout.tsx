@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AnimationSettingsProvider } from "@/context/AnimationContext";
@@ -17,6 +17,16 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#08090c" },
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://zakiuhh.vercel.app"),
@@ -54,17 +64,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="dark scroll-smooth overflow-x-hidden" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-bg-base text-text-main selection:bg-accent selection:text-black min-h-screen flex flex-col justify-between transition-colors duration-250`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-bg-base text-text-main selection:bg-accent selection:text-black min-h-screen flex flex-col justify-between transition-colors duration-250 overflow-x-hidden w-full`}
       >
         <ThemeProvider>
           <AnimationSettingsProvider>
             <SmoothScroll>
               <CustomCursor />
               <Navbar />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
               <Footer />
             </SmoothScroll>
           </AnimationSettingsProvider>

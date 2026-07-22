@@ -2,161 +2,116 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion, Variants } from "motion/react";
-import { Download, ArrowDownRight, Code2, Sparkles, Terminal } from "lucide-react";
+import { motion } from "motion/react";
+import { Terminal, Download, ArrowRight, Sparkles, MapPin } from "lucide-react";
 import { AsciiCanvas } from "@/components/effects/AsciiCanvas";
 import { useAnimationSettings } from "@/context/AnimationContext";
 
 export const HeroSection: React.FC = () => {
   const { animationsEnabled } = useAnimationSettings();
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
-    },
-  };
-
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center pt-28 pb-16 px-6 md:px-12 overflow-hidden bg-grid-pattern">
-      {/* ASCII Canvas Background Element */}
-      <div className="absolute inset-0 opacity-40 z-0">
+    <section className="relative min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 md:px-12 max-w-7xl mx-auto pt-24 pb-16 overflow-hidden">
+      {/* Background Generative ASCII Wave Canvas */}
+      <div className="absolute inset-0 opacity-40 pointer-events-none select-none z-0">
         <AsciiCanvas />
       </div>
 
-      {/* Subtle Radial Glow Overlay */}
-      <div className="absolute inset-0 bg-radial-glow pointer-events-none z-0" style={{
-        background: "radial-gradient(circle at 50% 40%, rgba(0, 255, 136, 0.08) 0%, transparent 60%)"
-      }} />
+      {/* Hero Content Container */}
+      <div className="relative z-10 flex flex-col gap-6 max-w-4xl">
+        {/* Status Pill */}
+        <motion.div
+          initial={animationsEnabled ? { opacity: 0, y: 15 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bg-surface/90 border border-border-subtle backdrop-blur-md self-start shadow-lg"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+          <span className="text-xs dev-tag text-text-sub">
+            BCS @ COMSATS WAH // AVAILABLE FOR FELLOWSHIPS
+          </span>
+        </motion.div>
 
-      <div className="max-w-5xl mx-auto w-full relative z-10">
-        {animationsEnabled ? (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col items-start gap-6"
+        {/* Main Name & Title */}
+        <div className="flex flex-col gap-2">
+          <motion.h1
+            initial={animationsEnabled ? { opacity: 0, y: 20 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-text-main"
           >
-            {/* Status Pill Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-bg-surface/90 border border-accent/30 backdrop-blur-md text-xs dev-tag text-accent shadow-[0_0_15px_rgba(0,255,136,0.15)]">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span>BCS STUDENT @ COMSATS WAH // AVAILABLE FOR PROJECTS</span>
-            </motion.div>
+            Zaki Ul Hassan
+          </motion.h1>
 
-            {/* Main Name & Title */}
-            <motion.div variants={itemVariants} className="flex flex-col gap-2">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-text-main leading-none">
-                ZAKI UL HASSAN
-              </h1>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-mono text-accent/90 font-medium">
-                Vanilla Web Dev <span className="text-text-dim">&</span> Creative Designer
-              </h2>
-            </motion.div>
-
-            {/* One-Line Pitch */}
-            <motion.p
-              variants={itemVariants}
-              className="text-base sm:text-lg text-text-sub max-w-2xl leading-relaxed font-sans"
-            >
-              Building browser-native tools with HTML5, CSS3, and JavaScript — zero frameworks, zero dependencies. Blending developer craft with professional video editing, graphic design, and AI integrations.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 pt-2">
-              {/* Primary CTA: Download Resume */}
-              <a
-                href="/Zaki_Resume.pdf"
-                download="Zaki_Ul_Hassan_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 px-6 py-3.5 rounded-xl btn-accent font-semibold text-sm hover:shadow-[0_0_25px_rgba(0,255,136,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-              >
-                <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
-                <span>Download Resume</span>
-              </a>
-
-              {/* Secondary CTA: Featured Projects */}
-              <Link
-                href="#projects"
-                className="group flex items-center gap-2 px-6 py-3.5 rounded-xl bg-bg-surface/90 border border-border-bright text-text-main font-medium text-sm hover:border-accent/60 hover:text-accent transition-all duration-200"
-              >
-                <span>View Projects</span>
-                <ArrowDownRight className="w-4 h-4 text-text-dim group-hover:text-accent group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all" />
-              </Link>
-            </motion.div>
-
-            {/* Tech Badges / Dev Signature */}
-            <motion.div variants={itemVariants} className="pt-8 flex flex-wrap items-center gap-6 border-t border-border-subtle/60 w-full text-xs dev-tag text-text-dim">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-3.5 h-3.5 text-accent" />
-                <span>ZERO_FRAMEWORK_NATIVE</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Code2 className="w-3.5 h-3.5 text-accent" />
-                <span>15+ AI CERTIFICATIONS</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-accent" />
-                <span>CREATIVE MOTION & DESIGN</span>
-              </div>
-            </motion.div>
+          <motion.div
+            initial={animationsEnabled ? { opacity: 0, y: 20 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex items-center gap-3 text-lg sm:text-2xl md:text-3xl text-accent font-medium dev-tag"
+          >
+            <Terminal className="w-5 h-5 sm:w-7 sm:h-7 shrink-0 text-accent" />
+            <span>Vanilla Web Dev &amp; Creative Media</span>
           </motion.div>
-        ) : (
-          /* Static Non-Animated Fallback */
-          <div className="flex flex-col items-start gap-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-bg-surface border border-accent/30 text-xs dev-tag text-accent">
-              <span className="w-2 h-2 rounded-full bg-accent" />
-              <span>BCS STUDENT @ COMSATS WAH // AVAILABLE FOR PROJECTS</span>
-            </div>
+        </div>
 
-            <div className="flex flex-col gap-2">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-text-main leading-none">
-                ZAKI UL HASSAN
-              </h1>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-mono text-accent/90 font-medium">
-                Vanilla Web Dev <span className="text-text-dim">&</span> Creative Designer
-              </h2>
-            </div>
+        {/* Brief Narrative Intro */}
+        <motion.p
+          initial={animationsEnabled ? { opacity: 0, y: 20 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-base sm:text-lg md:text-xl text-text-sub leading-relaxed max-w-2xl font-sans"
+        >
+          Architecting high-performance web software directly on browser APIs with <strong className="text-text-main font-semibold">zero external dependencies</strong>. Co-Director of Graphics at Zulal-e-Khizar Foundation &amp; Video Producer.
+        </motion.p>
 
-            <p className="text-base sm:text-lg text-text-sub max-w-2xl leading-relaxed">
-              Building browser-native tools with HTML5, CSS3, and JavaScript — zero frameworks, zero dependencies. Blending developer craft with professional video editing, graphic design, and AI integrations.
-            </p>
+        {/* Monospace Quick Specs Badges */}
+        <motion.div
+          initial={animationsEnabled ? { opacity: 0, y: 20 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs dev-tag text-text-dim"
+        >
+          <span className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-bg-surface/80 border border-border-subtle">
+            <MapPin className="w-3.5 h-3.5 text-accent shrink-0" />
+            <span>Kallar Kahar, Pakistan</span>
+          </span>
+          <span className="px-3 py-1 rounded-lg bg-bg-surface/80 border border-border-subtle text-accent font-mono">
+            #VanillaJS #HTML5 #CSS3
+          </span>
+          <span className="px-3 py-1 rounded-lg bg-bg-surface/80 border border-border-subtle text-text-sub">
+            15+ AI Certifications
+          </span>
+        </motion.div>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="/Zaki_Resume.pdf"
-                download="Zaki_Ul_Hassan_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-accent text-black font-semibold text-sm"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download Resume</span>
-              </a>
+        {/* Action Buttons */}
+        <motion.div
+          initial={animationsEnabled ? { opacity: 0, y: 20 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-wrap items-center gap-3 sm:gap-4 pt-4"
+        >
+          <a
+            href="/Zaki_Resume.pdf"
+            download="Zaki_Ul_Hassan_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl btn-accent font-semibold text-xs sm:text-sm hover:shadow-[0_0_25px_rgba(0,255,136,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+          >
+            <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+            <span>Download Resume</span>
+          </a>
 
-              <Link
-                href="#projects"
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-bg-surface border border-border-bright text-text-main font-medium text-sm"
-              >
-                <span>View Projects</span>
-                <ArrowDownRight className="w-4 h-4 text-text-dim" />
-              </Link>
-            </div>
-          </div>
-        )}
+          <Link
+            href="/projects"
+            className="group flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-xl bg-bg-surface/90 border border-border-bright hover:border-accent/60 text-xs sm:text-sm dev-tag text-text-main hover:text-accent transition-all duration-200 shadow-md"
+          >
+            <span>Explore 6 Projects</span>
+            <ArrowRight className="w-4 h-4 text-text-dim group-hover:text-accent group-hover:translate-x-1 transition-all" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
