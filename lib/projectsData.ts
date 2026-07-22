@@ -26,7 +26,7 @@ export const PROJECTS: Project[] = [
       "Zenith C++ is a privacy-first, client-side C++ IDE that runs entirely inside the browser. Powered by JSCPP as the primary execution engine and Monaco Editor (the VS Code core engine), code compiles in milliseconds on isolated Web Worker threads without sending source code to an external backend. Includes Xterm.js terminal rendering, stdin program input, 40+ standard library headers, and dark/light themes.",
     liveUrl: "https://zenith-cpp.vercel.app",
     githubUrl: "https://github.com/zakiuhh/zenith-cpp",
-    previewImage: "/projects/zenith-cpp.svg",
+    previewImage: "/projects/zenith-cpp-preview.png",
     category: "devtools",
     tags: ["C++17", "Monaco Editor", "Xterm.js", "WebAssembly", "Web Workers", "Vanilla CSS", "Zero-Backend"],
     features: [
@@ -51,7 +51,7 @@ export const PROJECTS: Project[] = [
     fullDescription:
       "SnipCode (SnapKode) is an advanced browser-native code screenshot generator designed for developers, educators, and content creators. Built with zero runtime frameworks, it allows users to format code with 16 gradient themes, 3 window frame styles (macOS, Windows, None), line highlighting, social media aspect ratio presets, custom watermarks, and high-resolution PNG, SVG, or Markdown exports.",
     githubUrl: "https://github.com/zakiuhh/snapkode",
-    previewImage: "/projects/snapkode.svg",
+    previewImage: "/projects/snipcode-preview.png",
     category: "vanilla",
     tags: ["HTML5", "Modern CSS", "Vanilla JavaScript", "Highlight.js", "html2canvas", "LocalStorage"],
     features: [
@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
     fullDescription:
       "DeepCacheCleaner is a powerful system maintenance utility for Windows 10 & 11. Going far beyond standard Disk Cleanup, this automated Batch script targets 51 deep cache locations across 9 structured phases. It safely force-closes running apps, cleans Windows Update leftovers, shrinks the WinSxS store via DISM, wipes GPU shader caches (NVIDIA/AMD), gaming caches (Steam/Epic), and developer caches (npm, Yarn, Bun, NuGet, pip), then executes a 5x desktop Explorer refresh.",
     githubUrl: "https://github.com/zakiuhh/DeepCacheCleaner",
-    previewImage: "/projects/deep-cache-cleaner.svg",
+    previewImage: "/projects/deepcachecleaner-preview.png",
     category: "utility",
     tags: ["Windows Batch Script", "System Administration", "WinSxS DISM", "Shader Cache", "Dev Maintenance"],
     features: [
@@ -102,7 +102,7 @@ export const PROJECTS: Project[] = [
       "C++ Crashed (CS501) is a comprehensive, interactive web application engineered collaboratively with a student engineering team for the CS501 Programming Fundamentals syllabus. It transforms static lecture slides into an interactive classroom experience with inline Judge0 C++ code compilation, a live code playground, an 807 MCQ quiz bank, 70 customizable credential themes, dual-orientation PDF/PNG exports, and Supabase cloud sync.",
     liveUrl: "https://cs-501.vercel.app",
     githubUrl: "https://github.com/zakiuhh/cs-501",
-    previewImage: "/projects/cs501.svg",
+    previewImage: "/projects/cs501-preview.png",
     category: "team",
     tags: ["TanStack Start", "React 19", "TypeScript", "Supabase", "Judge0 API", "Tailwind CSS v4", "Team Project"],
     features: [
@@ -126,8 +126,8 @@ export const PROJECTS: Project[] = [
     fullDescription:
       "Coloristan is a high-speed, zero-dependency color intelligence utility built entirely with native web standards. Designed for developers and designers who value pure browser performance, it accurately matches colors to human-readable names and converts between HEX, RGB, HSL, and modern OKLCH color spaces in real time without calling an external API or bundling heavy libraries.",
     liveUrl: "https://coloristan.vercel.app",
-    githubUrl: "https://github.com/zakiuhh",
-    previewImage: "/projects/coloristan.svg",
+    githubUrl: "https://github.com/zakiuhh/coloristan/",
+    previewImage: "/projects/coloristan-preview.png",
     category: "vanilla",
     tags: ["HTML5", "CSS3", "Vanilla JavaScript", "OKLCH Color Space", "Zero-Dependency"],
     features: [
@@ -151,7 +151,7 @@ export const PROJECTS: Project[] = [
     fullDescription:
       "What's Next? is an open-source, Bring-Your-Own-Key (BYOK) career exploration engine. It connects directly from the browser to 4 major LLM providers (Groq, Anthropic, Kimi, Mistral) to deliver highly tailored action plans covering career pathways, skill upgrades, recommended books, and portfolio project ideas.",
     githubUrl: "https://github.com/zakiuhh/what-s-next",
-    previewImage: "/projects/whats-next.svg",
+    previewImage: "/projects/whats-next-preview.png",
     category: "vanilla",
     tags: ["Vanilla JS", "Multi-AI Integration", "Fetch API", "Groq / Anthropic / Kimi / Mistral", "No-Bundler"],
     features: [
