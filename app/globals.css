@@ -80,6 +80,20 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* Primary Accent Button Light Theme Text Contrast */
+.btn-accent {
+  background-color: var(--accent);
+  color: #000000;
+}
+
+[data-theme="light"] .btn-accent {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .btn-accent svg {
+  color: #ffffff !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

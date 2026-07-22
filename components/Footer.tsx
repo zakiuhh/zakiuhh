@@ -6,7 +6,7 @@ import { Github, Linkedin, Mail, Terminal, ArrowUpRight } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-bg-surface border-t border-border-subtle/80 py-12 px-6 md:px-12 relative overflow-hidden">
+    <footer className="w-full bg-bg-surface border-t border-border-subtle/80 py-10 px-6 md:px-12 relative overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         {/* Brand & Dev Ethos */}
         <div className="flex flex-col gap-2 max-w-md">
@@ -55,15 +55,6 @@ export const Footer: React.FC = () => {
             <ArrowUpRight className="w-3 h-3 text-text-dim" />
           </a>
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-border-subtle/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] dev-tag text-text-dim">
-        <p>© {new Date().getFullYear()} Zaki Ul Hassan. All rights reserved.</p>
-        <p className="flex items-center gap-1.5">
-          <span>Engineered with Next.js, Motion & Lenis</span>
-          <span className="text-accent">•</span>
-          <span>Zero-Dependency Ethos</span>
-        </p>
       </div>
     </footer>
   );

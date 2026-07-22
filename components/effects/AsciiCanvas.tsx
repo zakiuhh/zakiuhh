@@ -10,6 +10,9 @@ export const AsciiCanvas: React.FC<{ className?: string }> = ({ className = "" }
   const { animationsEnabled } = useAnimationSettings();
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  // Retain time in ref across animation toggle state changes so it pauses & resumes in place
+  const timeRef = useRef<number>(0);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
@@ -27,7 +30,6 @@ export const AsciiCanvas: React.FC<{ className?: string }> = ({ className = "" }
     if (!ctx) return;
 
     let animationFrameId: number;
-    let time = 0;
 
     const resize = () => {
       if (!canvas) return;
@@ -56,8 +58,8 @@ export const AsciiCanvas: React.FC<{ className?: string }> = ({ className = "" }
 
       const mouseX = mouseRef.current.x;
       const mouseY = mouseRef.current.y;
-
       const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      const time = timeRef.current;
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -105,8 +107,9 @@ export const AsciiCanvas: React.FC<{ className?: string }> = ({ className = "" }
         }
       }
 
+      // Increment frame counter & continue loop ONLY when FX animation is enabled
       if (animationsEnabled) {
-        time += 1;
+        timeRef.current += 1;
         animationFrameId = requestAnimationFrame(render);
       }
     };

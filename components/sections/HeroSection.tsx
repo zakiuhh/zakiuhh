@@ -82,7 +82,7 @@ export const HeroSection: React.FC = () => {
                 download="Zaki_Ul_Hassan_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-accent text-black font-semibold text-sm hover:shadow-[0_0_25px_rgba(0,255,136,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                className="group flex items-center gap-2.5 px-6 py-3.5 rounded-xl btn-accent font-semibold text-sm hover:shadow-[0_0_25px_rgba(0,255,136,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
                 <span>Download Resume</span>

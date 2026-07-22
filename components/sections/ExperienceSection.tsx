@@ -43,7 +43,7 @@ export const ExperienceSection: React.FC = () => {
           <div className="flex items-center gap-4 pt-2">
             <Link
               href="/experience"
-              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_25px_rgba(0,255,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl btn-accent font-semibold text-xs dev-tag hover:shadow-[0_0_25px_rgba(0,255,136,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
               <span>View Full Experience</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

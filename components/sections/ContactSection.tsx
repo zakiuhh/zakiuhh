@@ -132,7 +132,7 @@ export const ContactSection: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-4 rounded-xl bg-accent text-black font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full py-4 rounded-xl btn-accent font-semibold text-sm hover:shadow-[0_0_20px_rgba(0,255,136,0.35)] transition-all flex items-center justify-center gap-2 mt-2"
             >
               <Send className="w-4 h-4" />
               <span>Launch Email Client</span>
