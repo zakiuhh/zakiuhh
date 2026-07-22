@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#08090c"/>
+  <defs>
+    <radialGradient id="glow-coloristan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#08090c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow-coloristan)"/>
+  
+  <rect x="60" y="60" width="1080" height="510" rx="20" fill="#0d0f15" stroke="#1e2430" stroke-width="2"/>
+  <rect x="60" y="60" width="1080" height="50" rx="20" fill="#141720"/>
+  <circle cx="95" cy="85" r="7" fill="#ef4444"/>
+  <circle cx="120" cy="85" r="7" fill="#eab308"/>
+  <circle cx="145" cy="85" r="7" fill="#22c55e"/>
+  <text x="175" y="90" fill="#94a3b8" font-family="monospace" font-size="16">coloristan // color-converter-matrix.js</text>
+  
+  <text x="100" y="180" fill="#a855f7" font-family="monospace" font-size="20" font-weight="bold">[0x_ZERO_DEPENDENCY]</text>
+  <text x="100" y="240" fill="#f1f5f9" font-family="sans-serif" font-size="52" font-weight="900">Coloristan</text>
+  <text x="100" y="290" fill="#94a3b8" font-family="monospace" font-size="22">OKLCH, HEX, RGB, HSL Converter &amp; 100+ Named Colors</text>
+  
+  <rect x="100" y="330" width="1000" height="190" rx="12" fill="#08090c" stroke="#1e2430" stroke-width="1.5"/>
+  <text x="130" y="380" fill="#a855f7" font-family="monospace" font-size="18">HEX: #00FF88 --&gt; RGB(0, 255, 136) --&gt; HSL(152, 100%, 50%)</text>
+  <text x="130" y="425" fill="#00ff88" font-family="monospace" font-size="18">OKLCH: oklch(0.86 0.29 162.4) [Match: Electric Emerald]</text>
+  <text x="130" y="470" fill="#f1f5f9" font-family="monospace" font-size="18">100% Native Browser JS &amp; CSS Variables. Zero bundler.</text>
+</svg>

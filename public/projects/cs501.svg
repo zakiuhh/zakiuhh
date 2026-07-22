@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#08090c"/>
+  <defs>
+    <radialGradient id="glow-cs501" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#08090c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow-cs501)"/>
+  
+  <rect x="60" y="60" width="1080" height="510" rx="20" fill="#0d0f15" stroke="#1e2430" stroke-width="2"/>
+  <rect x="60" y="60" width="1080" height="50" rx="20" fill="#141720"/>
+  <circle cx="95" cy="85" r="7" fill="#ef4444"/>
+  <circle cx="120" cy="85" r="7" fill="#eab308"/>
+  <circle cx="145" cy="85" r="7" fill="#22c55e"/>
+  <text x="175" y="90" fill="#94a3b8" font-family="monospace" font-size="16">cs501 // interactive-cplusplus-platform.ts</text>
+  
+  <text x="100" y="180" fill="#00ff88" font-family="monospace" font-size="20" font-weight="bold">[0x_TEAM_PROJECT]</text>
+  <text x="100" y="240" fill="#f1f5f9" font-family="sans-serif" font-size="52" font-weight="900">C++ Crashed (CS501)</text>
+  <text x="100" y="290" fill="#94a3b8" font-family="monospace" font-size="22">807 C++ MCQs, Judge0 Compiler &amp; 70 Certificate Themes</text>
+  
+  <rect x="100" y="330" width="1000" height="190" rx="12" fill="#08090c" stroke="#1e2430" stroke-width="1.5"/>
+  <text x="130" y="380" fill="#00ff88" font-family="monospace" font-size="18">&gt; TanStack Start + React 19 + Supabase PostgreSQL</text>
+  <text x="130" y="425" fill="#f1f5f9" font-family="monospace" font-size="18">&gt; Judge0 C++ GCC 9.2.0 Compiler Execution Engine</text>
+  <text x="130" y="470" fill="#94a3b8" font-family="monospace" font-size="18">&gt; Anonymous 6-Character Progress Sync &amp; Verification Lookup</text>
+</svg>
