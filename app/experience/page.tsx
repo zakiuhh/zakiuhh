@@ -1,147 +1,136 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Briefcase, Calendar, CheckCircle2, Youtube, Palette, Film, ArrowRight } from "lucide-react";
+import { Rocket, Sparkles, CheckCircle2, Code, Video, Palette, ArrowRight, Terminal } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 
 export const metadata: Metadata = {
-  title: "Experience — Zaki Ul Hassan",
-  description: "Detailed work experience, content growth milestones, graphic design leadership, and freelance video production.",
+  title: "Career Readiness — Zaki Ul Hassan",
+  description: "Fresh developer track record. Ready to collaborate on vanilla web engineering, C++ platforms, video editing, and graphic design projects.",
 };
 
 export default function ExperiencePage() {
-  const experiences = [
+  const readinessPillars = [
     {
-      company: "Zulal-e-Khizar Foundation",
-      role: "Co-Director & Graphics Team Volunteer",
-      period: "2024 – Present",
+      title: "Zero-Dependency Web Engineering",
+      icon: Code,
+      desc: "Capable of constructing fast, lightweight browser tools directly on HTML5, custom CSS variables, and modern JavaScript APIs without heavy external framework bloat.",
+      skills: ["Vanilla JS (ES6+)", "Custom CSS Variables", "HTML5 Semantics", "Web APIs"],
+    },
+    {
+      title: "Video Post-Production & Editing",
+      icon: Video,
+      desc: "Equipped with strong video editing skills for tech education, developer roadmaps, kinetic motion graphics, and high-retention video content workflows.",
+      skills: ["CapCut Pro", "Video Post-Production", "YouTube SEO", "Motion Graphics"],
+    },
+    {
+      title: "Graphic Design & Visual Branding",
       icon: Palette,
-      summary:
-        "Directing visual identity for humanitarian campaigns, leading creative design volunteers, and producing complete event brand suites.",
-      highlights: [
-        "Leads visual design strategy for foundation outreach events and social campaigns.",
-        "Produced full visual asset package for the flagship 'Path of Humanity' outreach program.",
-        "Mentors junior graphic designers in grid alignment, typography, and vector composition.",
-        "Collaborates directly with executive directors to execute visual campaign roadmaps.",
-      ],
-      tags: ["Graphic Design", "Adobe Illustrator", "Canva Pro", "Team Leadership", "Brand Identity"],
+      desc: "Skilled in visual design composition, typography alignment, vector graphic creation, and building cohesive brand suites for outreach campaigns.",
+      skills: ["Adobe Illustrator", "Canva Pro", "Vector Composition", "Brand Identity"],
     },
     {
-      company: "KIPS MDCAT PREP",
-      role: "Video Editor & Content Manager (YouTube)",
-      period: "2023 – 2024",
-      icon: Youtube,
-      summary:
-        "Managed and scaled an educational tech & MDCAT YouTube channel from inception to over 20,000 subscribers and full monetization.",
-      highlights: [
-        "Scaled channel audience to 20,000+ active student subscribers in under 12 months.",
-        "Met and surpassed YouTube Partner Program monetization criteria within 30 days of channel management.",
-        "Designed high-CTR video thumbnails, conducted video SEO keyword optimization, and managed upload schedules.",
-        "Handled video post-production pipeline including audio cleanup, captions, and visual graphics.",
-      ],
-      tags: ["CapCut", "Video Editing", "YouTube SEO", "Content Management", "Audience Growth"],
-    },
-    {
-      company: "Freelance Video Editor",
-      role: "Developer Tech Education Series Specialist",
-      period: "2023 – 2024",
-      icon: Film,
-      summary:
-        "Produced complete long-form video episodes for a software developer client's educational programming content series.",
-      highlights: [
-        "Delivered 4 full long-form video episodes: Frontend Web Dev Roadmap, Intro to Programming, and Variables in Programming.",
-        "Executed complete post-production workflow: script pacing, kinetic motion graphics, lower thirds, and color grading.",
-        "Enhanced viewer retention through structured visual animations and code highlighting.",
-      ],
-      tags: ["Video Production", "Motion Graphics", "Tech Education", "Color Grading", "Post Production"],
+      title: "Computer Science & C++ Logic",
+      icon: Terminal,
+      desc: "Solid foundational knowledge in C++ programming, algorithms, problem-solving, and building client-side compiler utilities like Zenith C++.",
+      skills: ["C++17", "Data Structures", "Algorithm Logic", "WebAssembly"],
     },
   ];
 
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-5xl mx-auto overflow-x-hidden w-full">
-      <AsciiDivider label="WORK_EXPERIENCE // TIMELINE" />
+      <AsciiDivider label="CAREER_STATUS // GETTING_STARTED" />
 
       <div className="flex flex-col gap-4 mt-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
-          <Briefcase className="w-3.5 h-3.5" />
-          <span>PRODUCTION &amp; LEADERSHIP HISTORY</span>
+          <Rocket className="w-3.5 h-3.5 shrink-0" />
+          <span>FRESH TALENT // READY FOR FIRST OPPORTUNITIES</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-text-main tracking-tight">
-          Professional Experience
+          Just Getting Started
         </h1>
 
-        <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-          Proven track record in visual brand direction, YouTube channel scaling to 20,000+ subscribers, and developer educational video production.
+        <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans leading-relaxed">
+          I am at the start of my professional journey as a first-year BCS student at <strong className="text-text-main font-semibold">COMSATS University Islamabad</strong>. Be the first to test my capabilities and collaborate on ambitious software or creative projects!
         </p>
       </div>
 
-      {/* Experience Timeline */}
-      <div className="mt-10 sm:mt-12 space-y-6 sm:space-y-10">
-        {experiences.map((exp) => {
-          const Icon = exp.icon;
-          return (
-            <div
-              key={exp.company}
-              className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-bg-surface/90 border border-border-subtle hover:border-accent/40 transition-all shadow-xl flex flex-col gap-5 sm:gap-6"
-            >
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle/60 pb-5">
-                <div className="flex items-center gap-3.5 sm:gap-4">
-                  <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-bg-elevated border border-border-bright text-accent shrink-0">
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <div>
-                    <h2 className="text-base sm:text-xl font-bold text-text-main">{exp.role}</h2>
-                    <span className="text-xs sm:text-sm text-accent dev-tag">{exp.company}</span>
-                  </div>
-                </div>
+      {/* Hero Invitation Banner */}
+      <div className="mt-10 sm:mt-12 p-6 sm:p-10 rounded-2xl sm:rounded-3xl bg-bg-surface/90 border border-border-subtle shadow-xl flex flex-col gap-6 w-full min-w-0">
+        <div className="flex items-center gap-3 text-accent dev-tag text-xs font-semibold">
+          <Sparkles className="w-4 h-4 shrink-0" />
+          <span>WHY_COLLABORATE_WITH_ME</span>
+        </div>
 
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-bg-elevated border border-accent/20 text-xs dev-tag text-accent self-start sm:self-auto shrink-0">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{exp.period}</span>
-                </div>
-              </div>
+        <h2 className="text-xl sm:text-3xl font-bold text-text-main">
+          Eager, disciplined, and focused on delivering clean, zero-dependency results.
+        </h2>
 
-              {/* Summary */}
-              <p className="text-xs sm:text-sm text-text-sub leading-relaxed font-sans">
-                {exp.summary}
-              </p>
+        <p className="text-sm sm:text-base text-text-sub leading-relaxed font-sans">
+          While I am early in my career, my 6 shipped projects demonstrate my ability to take an idea from concept to a fully functional, deployed web application. I bring fresh energy, strong technical fundamentals, and high dedication to every client or team initiative.
+        </p>
 
-              {/* Bullet Points */}
-              <div className="space-y-3">
-                <h3 className="text-xs dev-tag text-text-dim">KEY_RESPONSIBILITIES_&amp;_MILESTONES</h3>
-                <ul className="space-y-2">
-                  {exp.highlights.map((h, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-text-sub">
-                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-3 border-t border-border-subtle/40">
-                {exp.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-0.5 rounded-lg bg-bg-elevated text-[11px] sm:text-xs dev-tag text-text-dim border border-border-subtle"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+        <div className="pt-2">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl btn-accent font-semibold text-xs dev-tag hover:shadow-[0_0_25px_rgba(0,255,136,0.35)] transition-all"
+          >
+            <Sparkles className="w-4 h-4 shrink-0" />
+            <span>Be My First Client / Team Collaborator</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
 
-      {/* Footer CTA */}
+      {/* Core Technical Readiness Pillars */}
+      <div className="mt-12 space-y-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-text-main font-mono">
+          // Core Competencies &amp; Technical Readiness
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full min-w-0">
+          {readinessPillars.map((pillar) => {
+            const Icon = pillar.icon;
+            return (
+              <div
+                key={pillar.title}
+                className="p-5 sm:p-6 rounded-2xl bg-bg-surface/80 border border-border-subtle flex flex-col justify-between gap-4 shadow-lg"
+              >
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-bg-elevated text-accent border border-border-bright shrink-0">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-bold text-text-main">{pillar.title}</h3>
+                  </div>
+
+                  <p className="text-xs text-text-sub leading-relaxed font-sans">
+                    {pillar.desc}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border-subtle/40">
+                  {pillar.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2.5 py-0.5 rounded-lg bg-bg-elevated text-[11px] dev-tag text-accent/80 border border-accent/20"
+                    >
+                      #{skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Bottom CTA */}
       <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
-          <h3 className="text-lg sm:text-xl font-bold text-text-main">Want to collaborate on a project?</h3>
-          <p className="text-xs text-text-sub">Available for web development, video editing, or graphic design inquiries.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-text-main">Ready to test my capabilities?</h3>
+          <p className="text-xs text-text-sub">Let&apos;s build a project together. Reach out via email or direct message.</p>
         </div>
         <Link
           href="/contact"
