@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { GraduationCap, MapPin, Cpu, Palette, Video, Award, Download, ArrowRight, CheckCircle2 } from "lucide-react";
+import { GraduationCap, MapPin, Cpu, Palette, Video, Award, Download, ArrowRight } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto overflow-x-hidden w-full">
       <AsciiDivider label="SYSTEM_ABOUT // IDENTITY_PROFILE" />
 
       {/* Header Banner */}
@@ -44,20 +44,20 @@ export default function AboutPage() {
           <span>KALLAR KAHAR, PAKISTAN // BCS @ COMSATS WAH</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-text-main tracking-tight">
           About Zaki Ul Hassan
         </h1>
 
-        <p className="text-lg text-text-sub max-w-3xl leading-relaxed font-sans">
+        <p className="text-base sm:text-lg text-text-sub max-w-3xl leading-relaxed font-sans">
           Vanilla Web Developer, Video Editor, Graphic Designer, and BCS Student at COMSATS University Islamabad (Wah Campus). Building native browser software with zero dependencies.
         </p>
       </div>
 
       {/* Detailed Story Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-12 items-start">
-        <div className="lg:col-span-7 flex flex-col gap-6 text-text-sub text-base leading-relaxed font-sans">
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
-            <h2 className="text-xl font-bold text-text-main font-mono">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 mt-10 sm:mt-12 items-start">
+        <div className="lg:col-span-7 flex flex-col gap-6 text-text-sub text-sm sm:text-base leading-relaxed font-sans">
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
+            <h2 className="text-lg sm:text-xl font-bold text-text-main font-mono">
               // Engineering Philosophy
             </h2>
             <p>
@@ -68,9 +68,9 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
-            <h2 className="text-xl font-bold text-text-main font-mono">
-              // Creative Direction & Media Production
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
+            <h2 className="text-lg sm:text-xl font-bold text-text-main font-mono">
+              // Creative Direction &amp; Media Production
             </h2>
             <p>
               In addition to writing clean code, I possess extensive experience in video production and graphic design. As the Co-Director of the Graphics Team at Zulal-e-Khizar Foundation, I direct visual identity assets for humanitarian outreach campaigns.
@@ -83,8 +83,8 @@ export default function AboutPage() {
 
         {/* Right Sidebar: Quick Stats & Resume */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-6">
-            <h3 className="text-sm font-semibold dev-tag text-accent border-b border-border-subtle pb-3">
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-6">
+            <h3 className="text-xs sm:text-sm font-semibold dev-tag text-accent border-b border-border-subtle pb-3">
               EDUCATION_CREDENTIALS
             </h3>
 
@@ -104,7 +104,7 @@ export default function AboutPage() {
                   FSc Pre-Engineering
                 </h4>
                 <p className="text-xs text-text-sub">
-                  Army Public School & College, Chakwal
+                  Army Public School &amp; College, Chakwal
                 </p>
                 <span className="text-[11px] dev-tag text-text-dim">2022 – 2024</span>
               </div>
@@ -115,14 +115,14 @@ export default function AboutPage() {
               download="Zaki_Ul_Hassan_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 py-3 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all"
+              className="flex items-center justify-center gap-2 py-3 rounded-xl btn-accent font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all"
             >
               <Download className="w-4 h-4" />
               <span>DOWNLOAD_OFFICIAL_RESUME</span>
             </a>
           </div>
 
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-3">
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-3">
             <h3 className="text-xs dev-tag text-text-dim">QUICK_INDEX</h3>
             <div className="space-y-2 text-xs text-text-sub">
               <div className="flex items-center justify-between py-1 border-b border-border-subtle/40">
@@ -143,23 +143,23 @@ export default function AboutPage() {
       </div>
 
       {/* 4 Pillars Matrix */}
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold text-text-main mb-6 font-mono">
+      <div className="mt-12 sm:mt-16">
+        <h2 className="text-xl sm:text-2xl font-bold text-text-main mb-6 font-mono">
           // Core Competency Pillars
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {pillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={pillar.title}
-                className="p-6 rounded-2xl bg-bg-surface/80 border border-border-subtle hover:border-accent/40 transition-all flex items-start gap-4"
+                className="p-5 sm:p-6 rounded-2xl bg-bg-surface/80 border border-border-subtle hover:border-accent/40 transition-all flex items-start gap-4"
               >
-                <div className="p-3 rounded-xl bg-bg-elevated text-accent border border-border-bright shrink-0">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-bg-elevated text-accent border border-border-bright shrink-0">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-base font-semibold text-text-main">
+                  <h3 className="text-sm sm:text-base font-semibold text-text-main">
                     {pillar.title}
                   </h3>
                   <p className="text-xs text-text-sub leading-relaxed">
@@ -173,14 +173,14 @@ export default function AboutPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="mt-16 p-8 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
-          <h3 className="text-xl font-bold text-text-main">Interested in my shipped projects?</h3>
-          <p className="text-xs text-text-sub">Explore Coloristan, What&apos;s Next?, DECKY CAP Docs, and C++ Crashed.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-text-main">Interested in my shipped projects?</h3>
+          <p className="text-xs text-text-sub">Explore Zenith C++, SnipCode, DeepCacheCleaner, and CS501.</p>
         </div>
         <Link
           href="/projects"
-          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all shrink-0"
+          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all shrink-0 self-start sm:self-auto"
         >
           <span>VIEW_ALL_PROJECTS</span>
           <ArrowRight className="w-4 h-4" />

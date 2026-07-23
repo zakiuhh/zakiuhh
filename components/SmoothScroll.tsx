@@ -9,7 +9,10 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (!animationsEnabled) {
+    // Disable Lenis on touch devices to ensure 100% native touch scrolling responsiveness on smartphones
+    const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+    if (!animationsEnabled || isTouchDevice) {
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;
