@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { useAnimationSettings } from "@/context/AnimationContext";
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { animationsEnabled } = useAnimationSettings();
+  const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Disable Lenis on touch devices to ensure 100% native touch scrolling responsiveness on smartphones
-    const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
-
-    if (!animationsEnabled || isTouchDevice) {
+    if (!animationsEnabled) {
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;
@@ -25,6 +24,7 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1,
+      touchMultiplier: 1.5,
     });
 
     lenisRef.current = lenis;
@@ -44,6 +44,13 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
       lenisRef.current = null;
     };
   }, [animationsEnabled]);
+
+  // Scroll to top smoothly on route navigation across every single page
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 };
