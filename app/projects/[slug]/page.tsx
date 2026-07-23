@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Github, Terminal, CheckCircle2, Cpu, Calendar, User, Layers } from "lucide-react";
 import { getProjectBySlug, PROJECTS } from "@/lib/projectsData";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
+import { ShareProjectButton } from "@/components/ShareProjectButton";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -42,11 +43,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-5xl mx-auto">
+    <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-5xl mx-auto overflow-x-hidden w-full">
       {/* Back Button Link */}
       <Link
         href="/projects"
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-subtle text-xs dev-tag text-text-sub hover:text-accent hover:border-accent/40 transition-all mb-8 group"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-bg-surface border border-border-subtle text-xs dev-tag text-text-sub hover:text-accent hover:border-accent/40 transition-all mb-6 sm:mb-8 group"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
         <span>BACK_TO_PROJECTS</span>
@@ -55,18 +56,20 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       <AsciiDivider label={`PROJECT_SPEC // ${project.slug.toUpperCase()}`} />
 
       {/* Main Header Card */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-bg-surface/90 border border-border-subtle shadow-2xl flex flex-col gap-6 mt-4 relative">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border-subtle/60 pb-6">
-          <div className="flex flex-col gap-2">
+      <div className="p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-bg-surface/90 border border-border-subtle shadow-2xl flex flex-col gap-6 mt-4 relative w-full min-w-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border-subtle/60 pb-6 w-full min-w-0">
+          <div className="flex flex-col gap-2 min-w-0">
             <h1 className="text-3xl sm:text-5xl font-bold text-text-main tracking-tight">
               {project.title}
             </h1>
-            <p className="text-sm sm:text-base text-accent dev-tag font-medium">
+            <p className="text-xs sm:text-base text-accent dev-tag font-medium">
               {project.subtitle}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            <ShareProjectButton slug={project.slug} title={project.title} />
+
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -83,7 +86,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-black font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.4)] transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl btn-accent font-semibold text-xs dev-tag hover:shadow-[0_0_20px_rgba(0,255,136,0.4)] transition-all"
               >
                 <ExternalLink className="w-4 h-4" />
                 <span>Live Demo</span>
@@ -96,13 +99,13 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         {project.previewImage && (
           <div className="w-full rounded-2xl bg-bg-base border border-border-subtle overflow-hidden shadow-xl flex flex-col my-2">
             <div className="flex items-center justify-between px-4 py-2.5 bg-bg-elevated/90 border-b border-border-subtle/60 text-xs dev-tag text-text-dim">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-                <span className="ml-2 text-text-sub font-mono">{project.githubUrl || project.slug}</span>
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/70 shrink-0" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70 shrink-0" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/70 shrink-0" />
+                <span className="ml-2 text-text-sub font-mono truncate">{project.githubUrl || project.slug}</span>
               </div>
-              <span className="text-accent/80 font-mono">PREVIEW</span>
+              <span className="text-accent/80 font-mono shrink-0 ml-2">PREVIEW</span>
             </div>
 
             <div className="w-full max-h-[420px] overflow-hidden bg-bg-surface">
@@ -117,17 +120,17 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         )}
 
         {/* Project Meta Info Pills */}
-        <div className="flex flex-wrap items-center gap-6 text-xs dev-tag text-text-dim pt-2">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs dev-tag text-text-dim pt-2">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-accent" />
+            <Calendar className="w-4 h-4 text-accent shrink-0" />
             <span>YEAR: {project.year}</span>
           </div>
           <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-accent" />
+            <User className="w-4 h-4 text-accent shrink-0" />
             <span>ROLE: {project.role}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-accent" />
+            <Layers className="w-4 h-4 text-accent shrink-0" />
             <span>CATEGORY: {project.category.toUpperCase()}</span>
           </div>
         </div>
@@ -146,27 +149,27 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       </div>
 
       {/* Overview & Feature Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8 w-full min-w-0">
         {/* Left Column: Full Description & Features */}
-        <div className="lg:col-span-7 flex flex-col gap-6">
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
-            <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-accent" />
+        <div className="lg:col-span-7 flex flex-col gap-6 w-full min-w-0">
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
+            <h3 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
+              <Terminal className="w-4 h-4 text-accent shrink-0" />
               Project Overview
             </h3>
-            <p className="text-text-sub text-base leading-relaxed font-sans">
+            <p className="text-text-sub text-xs sm:text-base leading-relaxed font-sans">
               {project.fullDescription}
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
-            <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-accent" />
-              Key Features & Performance Highlights
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
+            <h3 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
+              Key Features &amp; Performance Highlights
             </h3>
             <ul className="space-y-3">
               {project.features.map((feature, fIdx) => (
-                <li key={fIdx} className="flex items-start gap-3 text-sm text-text-sub">
+                <li key={fIdx} className="flex items-start gap-3 text-xs sm:text-sm text-text-sub">
                   <span className="text-accent dev-tag font-bold shrink-0">[0{fIdx + 1}]</span>
                   <span>{feature}</span>
                 </li>
@@ -176,10 +179,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </div>
 
         {/* Right Column: Architecture & Engineering Notes */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
-            <h3 className="text-sm dev-tag text-accent font-semibold flex items-center gap-2">
-              <Cpu className="w-4 h-4" />
+        <div className="lg:col-span-5 flex flex-col gap-6 w-full min-w-0">
+          <div className="p-5 sm:p-6 rounded-2xl bg-bg-surface border border-border-subtle flex flex-col gap-4">
+            <h3 className="text-xs dev-tag text-accent font-semibold flex items-center gap-2">
+              <Cpu className="w-4 h-4 shrink-0" />
               ARCHITECTURE_SPECS
             </h3>
             <p className="text-xs text-text-sub leading-relaxed font-sans">
