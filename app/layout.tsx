@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { AnimationSettingsProvider } from "@/context/AnimationContext";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -79,6 +81,8 @@ export default function RootLayout({
             </SmoothScroll>
           </AnimationSettingsProvider>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
