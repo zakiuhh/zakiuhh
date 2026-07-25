@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Zap, ZapOff, Menu, X, Terminal, Code2, Sun, Moon } from "lucide-react";
+import { Zap, ZapOff, Menu, X, Terminal, Code2, Sun, Moon, SlidersHorizontal } from "lucide-react";
 import { useAnimationSettings } from "@/context/AnimationContext";
 import { useTheme } from "@/context/ThemeContext";
 import { motion, AnimatePresence } from "motion/react";
 
 export const Navbar: React.FC = () => {
-  const { animationsEnabled, toggleAnimations } = useAnimationSettings();
+  const { animationsEnabled, fxMode, cycleFxMode } = useAnimationSettings();
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -77,25 +77,30 @@ export const Navbar: React.FC = () => {
             )}
           </button>
 
-          {/* Animation Toggle Switch */}
+          {/* System-Aware FX Mode Toggle Switch */}
           <button
-            onClick={toggleAnimations}
+            onClick={cycleFxMode}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs dev-tag transition-all duration-200 ${
               animationsEnabled
                 ? "bg-accent/10 border-accent/40 text-accent hover:bg-accent/20"
                 : "bg-bg-elevated border-border-subtle text-text-dim hover:text-text-sub"
             }`}
-            title={animationsEnabled ? "Disable Motion & Smooth Scroll" : "Enable Motion & Smooth Scroll"}
+            title={`Current FX Mode: ${fxMode.toUpperCase()} (${animationsEnabled ? "Active" : "Paused"}). Click to cycle.`}
           >
-            {animationsEnabled ? (
+            {fxMode === "system" ? (
               <>
-                <Zap className="w-3.5 h-3.5 text-accent animate-pulse" />
-                <span className="hidden sm:inline">FX: ON</span>
+                <SlidersHorizontal className="w-3.5 h-3.5 text-accent shrink-0" />
+                <span>FX: AUTO</span>
+              </>
+            ) : fxMode === "on" ? (
+              <>
+                <Zap className="w-3.5 h-3.5 text-accent animate-pulse shrink-0" />
+                <span>FX: ON</span>
               </>
             ) : (
               <>
-                <ZapOff className="w-3.5 h-3.5 text-text-dim" />
-                <span className="hidden sm:inline">FX: OFF</span>
+                <ZapOff className="w-3.5 h-3.5 text-text-dim shrink-0" />
+                <span>FX: OFF</span>
               </>
             )}
           </button>
