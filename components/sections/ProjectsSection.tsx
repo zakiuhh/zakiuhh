@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ExternalLink, Github, ArrowRight, Code, Terminal } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, Code, Terminal, Sparkles } from "lucide-react";
 import { PROJECTS, Project } from "@/lib/projectsData";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 import { useAnimationSettings } from "@/context/AnimationContext";
@@ -111,10 +111,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, animationsEna
           <h3 className="text-base sm:text-lg font-bold text-text-main group-hover:text-accent transition-colors">
             {project.title}
           </h3>
-          <p className="text-[11px] text-accent dev-tag font-medium">
-            {project.subtitle}
-          </p>
-          <p className="text-xs text-text-sub leading-relaxed mt-1 font-sans line-clamp-3">
+
+          {/* Impact / Highlight Badge */}
+          <div className="flex items-start gap-1.5 px-2.5 py-1 rounded-lg bg-accent/10 border border-accent/30 text-[11px] dev-tag text-accent font-semibold my-0.5">
+            <Sparkles className="w-3 h-3 shrink-0 mt-0.5" />
+            <span className="leading-tight">{project.impactSummary}</span>
+          </div>
+
+          <p className="text-xs text-text-sub leading-relaxed mt-1 font-sans line-clamp-2">
             {project.description}
           </p>
         </div>

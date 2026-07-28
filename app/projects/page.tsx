@@ -29,11 +29,11 @@ export default function ProjectsIndexPage() {
       <div className="flex flex-col gap-4 mt-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs dev-tag text-accent self-start">
           <Code className="w-3.5 h-3.5" />
-          <span>6 SHIPPED PROJECTS // DEV TOOLS, VANILLA & TEAM SOFTWARE</span>
+          <span>6 SHIPPED PROJECTS // DEV TOOLS, VANILLA &amp; TEAM SOFTWARE</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-bold text-text-main tracking-tight">
-          Software Projects & Engineering Work
+          Software Projects &amp; Engineering Work
         </h1>
 
         <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
@@ -105,10 +105,14 @@ export default function ProjectsIndexPage() {
               <h2 className="text-xl font-bold text-text-main group-hover:text-accent transition-colors">
                 {project.title}
               </h2>
-              <p className="text-xs dev-tag text-accent font-medium mt-1">
-                {project.subtitle}
-              </p>
-              <p className="text-xs text-text-sub leading-relaxed mt-3 font-sans">
+
+              {/* Impact / Highlight Badge */}
+              <div className="flex items-start gap-1.5 px-2.5 py-1 rounded-lg bg-accent/10 border border-accent/30 text-xs dev-tag text-accent font-semibold my-2">
+                <Sparkles className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                <span className="leading-tight">{project.impactSummary}</span>
+              </div>
+
+              <p className="text-xs text-text-sub leading-relaxed mt-2 font-sans line-clamp-3">
                 {project.description}
               </p>
             </div>

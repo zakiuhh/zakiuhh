@@ -2,6 +2,7 @@ export interface Project {
   slug: string;
   title: string;
   subtitle: string;
+  impactSummary: string;
   description: string;
   fullDescription: string;
   liveUrl?: string;
@@ -20,6 +21,7 @@ export const PROJECTS: Project[] = [
     slug: "zenith-cpp",
     title: "Zenith C++",
     subtitle: "Browser-native client-side C++ IDE with WebAssembly & Monaco Editor",
+    impactSummary: "Browser-native C++ IDE with 0ms backend overhead & offline Wasm execution",
     description:
       "Full-featured browser C++ development environment compiling and running C++ code 100% client-side via JSCPP interpreter and WebAssembly workers. Zero server round-trips.",
     fullDescription:
@@ -46,6 +48,7 @@ export const PROJECTS: Project[] = [
     slug: "snapkode",
     title: "SnipCode / SnapKode",
     subtitle: "High-resolution customizable code screenshot & markdown export tool",
+    impactSummary: "16-theme code screenshot generator with URL state sharing & 6x PNG export",
     description:
       "Browser tool to turn code snippets into beautiful, shareable code screenshots with 16 gradient themes, window frames, line highlighting, and custom watermarks.",
     fullDescription:
@@ -71,6 +74,7 @@ export const PROJECTS: Project[] = [
     slug: "deep-cache-cleaner",
     title: "DeepCacheCleaner",
     subtitle: "Automated Windows cache cleaner wiping 51 cache locations across 9 phases",
+    impactSummary: "Automated 9-phase Batch script reclaiming 2 GB to 50+ GB disk space",
     description:
       "Single-file automated Batch script that deep-wipes 51 Windows cache locations across 9 structured phases including WinSxS, update leftovers, shader caches, and dev tool caches.",
     fullDescription:
@@ -96,6 +100,7 @@ export const PROJECTS: Project[] = [
     slug: "cs501",
     title: "C++ Crashed (CS501)",
     subtitle: "Interactive C++ learning platform & verified credential engine built with team",
+    impactSummary: "807-MCQ learning platform & credential engine built for CS501 course",
     description:
       "Self-contained interactive learning platform for the CS501 Programming Fundamentals course. Features 807 C++ MCQs, inline Judge0 C++ compiler execution, 70 certificate themes, and Supabase cloud progress sync.",
     fullDescription:
@@ -121,6 +126,7 @@ export const PROJECTS: Project[] = [
     slug: "coloristan",
     title: "Coloristan",
     subtitle: "Zero-dependency color name identifier and multi-format converter",
+    impactSummary: "Instant 0-dependency OKLCH/HEX converter with fuzzy name identification",
     description:
       "Vanilla HTML5/CSS3/JS tool to identify color names and convert between HEX, RGB, HSL, OKLCH. Smart autocomplete across 100+ named colors.",
     fullDescription:
@@ -146,6 +152,7 @@ export const PROJECTS: Project[] = [
     slug: "whats-next",
     title: "What's Next?",
     subtitle: "Multi-provider BYOK AI career & skill guidance advisor",
+    impactSummary: "Multi-provider BYOK AI advisor generating 12 personalized career plans",
     description:
       "BYOK career advisor generating 12 personalized suggestions across career, courses, projects, books. Integrates 4 AI providers (Groq, Anthropic, Kimi, Mistral).",
     fullDescription:
