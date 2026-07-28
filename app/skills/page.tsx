@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Code2, Palette, Terminal, Cpu, Layers, Sparkles, Sliders, Box, Bot, ArrowRight } from "lucide-react";
+import { Code2, Palette, Terminal, Cpu, Layers, Sparkles, Sliders, Box, Bot, ArrowRight, BookOpen, Coffee, CheckCircle2 } from "lucide-react";
 import { AsciiDivider } from "@/components/effects/AsciiDivider";
 
 export const metadata: Metadata = {
   title: "Skills — Zaki Ul Hassan",
-  description: "Comprehensive technical capabilities, video post-production tools, graphic design software, and AI prompt engineering competencies.",
+  description: "Comprehensive technical capabilities, active learning trajectory in Frontend & Java, video post-production tools, and graphic design software.",
 };
 
 export default function SkillsPage() {
@@ -27,6 +27,23 @@ export default function SkillsPage() {
     { name: "Canva Pro", level: "Advanced", desc: "Rapid Multi-Channel Campaign Creation", icon: Box },
   ];
 
+  const currentLearning = [
+    {
+      title: "In-Depth Frontend Web Engineering",
+      badge: "ACTIVE_DEEP_DIVE",
+      icon: Code2,
+      desc: "Deep-diving into DOM rendering optimization, modern CSS grid/flex architectures, event loop mechanics, async JS patterns, and zero-dependency web performance.",
+      tags: ["#Frontend", "#JavaScript", "#WebPerformance", "#CSS3"],
+    },
+    {
+      title: "Java Programming & OOP Fundamentals",
+      badge: "SKILL_EXPANSION",
+      icon: Coffee,
+      desc: "Mastering Object-Oriented Programming (OOP) principles, Java syntax models, class inheritance, interfaces, and core software design patterns.",
+      tags: ["#Java", "#OOP", "#DataStructures", "#LogicDesign"],
+    },
+  ];
+
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto overflow-x-hidden w-full">
       <AsciiDivider label="SYSTEM_SKILLS // CAPABILITY_MATRIX" />
@@ -42,7 +59,7 @@ export default function SkillsPage() {
         </h1>
 
         <p className="text-base sm:text-lg text-text-sub max-w-2xl font-sans">
-          A detailed breakdown of programming languages, browser APIs, video editing pipelines, graphic design suites, and AI model integrations.
+          A detailed breakdown of programming languages, browser APIs, video editing pipelines, graphic design suites, and active learning focus areas.
         </p>
       </div>
 
@@ -117,6 +134,56 @@ export default function SkillsPage() {
               );
             })}
           </div>
+        </div>
+      </div>
+
+      {/* Current Learning Focus Subsection */}
+      <div className="mt-12 sm:mt-16 space-y-6">
+        <AsciiDivider label="ACTIVE_LEARNING // IN_PROGRESS" />
+        <div className="flex items-center gap-2 text-accent dev-tag text-xs">
+          <BookOpen className="w-3.5 h-3.5 shrink-0" />
+          <span>CURRENT_STUDY_TRAJECTORY</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-text-main font-mono">
+          // Active Learning &amp; Skills Expansion
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full min-w-0">
+          {currentLearning.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="p-5 sm:p-6 rounded-2xl bg-bg-surface/90 border border-border-subtle hover:border-accent/50 transition-all flex flex-col justify-between gap-4 shadow-lg min-w-0"
+              >
+                <div className="flex flex-col gap-3 min-w-0">
+                  <div className="flex items-center justify-between gap-2 border-b border-border-subtle/50 pb-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="p-2 rounded-xl bg-bg-elevated text-accent border border-border-bright shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm sm:text-base font-bold text-text-main truncate">{item.title}</h3>
+                    </div>
+                    <span className="text-[10px] dev-tag px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/30 shrink-0">
+                      {item.badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-text-sub leading-relaxed font-sans">{item.desc}</p>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border-subtle/40">
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-0.5 rounded-lg bg-bg-elevated text-[11px] dev-tag text-accent/80 border border-accent/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

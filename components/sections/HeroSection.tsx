@@ -53,7 +53,7 @@ export const HeroSection: React.FC = () => {
             className="flex items-center gap-2.5 sm:gap-3 text-lg sm:text-2xl md:text-3xl lg:text-4xl text-accent font-medium dev-tag leading-snug"
           >
             <Terminal className="w-5 h-5 sm:w-7 sm:h-7 lg:w-9 lg:h-9 shrink-0 text-accent" />
-            <span className="truncate">&gt;_ Vanilla Web Dev &amp; Creative Media</span>
+            <span className="truncate">Vanilla Web Dev &amp; Creative Media</span>
           </motion.div>
         </div>
 
@@ -64,7 +64,7 @@ export const HeroSection: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-sub leading-relaxed max-w-3xl font-sans"
         >
-          Architecting high-performance web software directly on browser APIs with <strong className="text-text-main font-semibold">zero external dependencies</strong>. Co-Director of Graphics at Zulal-e-Khizar Foundation &amp; Video Producer.
+          Building fast, <strong className="text-text-main font-semibold">zero-dependency web software</strong> and developer media.
         </motion.p>
 
         {/* Monospace Quick Specs Badges */}
