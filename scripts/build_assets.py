@@ -5,8 +5,12 @@ Builds every SVG in the profile README (orbit + pipeline design), light and dark
     python scripts/build_assets.py
 
 Fonts (Space Grotesk, JetBrains Mono, both OFL) are subset per SVG and embedded,
-so GitHub renders the real typefaces. In GitHub Actions the script also pulls
-your contribution count for the pipeline header (needs GITHUB_TOKEN).
+so GitHub renders the real typefaces.
+
+Live GitHub data (stats card, project cards, activity feed, contribution count)
+is fetched from the public API and cached in data/github.json, so a run with no
+network or an API hiccup falls back to the last good numbers. Contribution counts
+need a token (GH_TOKEN or GITHUB_TOKEN); everything else works without one.
 
 Edit the CONTENT section to change any text.
 """
@@ -18,7 +22,7 @@ import os
 import random
 import urllib.request
 from collections import defaultdict
-from datetime import date
+from datetime import datetime, timezone
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -37,61 +41,72 @@ TAGLINE = "CS Student, Developer & Creator building things that matter."
 STATUS = "status: building things that matter"
 
 ORBIT = [  # (ring, tools)
-    ("code", ["C++", "Python", "JavaScript"]),
-    ("dev", ["HTML5", "CSS3", "Web Dev", "AI/ML"]),
+    ("code", ["C++", "Python", "JavaScript", "Java (OOPs)"]),
+    ("dev", ["HTML5", "CSS3", "Web Dev"]),
     ("tools", ["Git", "GitHub", "Linux", "Illustrator", "CapCut"]),
 ]
 
-FACTS = [("Based in", "Chakwal, Pakistan"), ("Education", "COMSATS Wah · BS CS"),
-         ("Focus", "Web Dev, AI/ML & Design")]
+FACTS = [("Based in", "Wah Cantt, Pakistan"), ("Education", "COMSATS Wah · BS CS"),
+         ("Focus", "Web Dev & Design")]
 
 STAGES = [  # (stage, title, subtitle, when)
     ("init", "COMSATS Wah", "BS Computer Science", "Student"),
     ("build", "Core Software", "C++, Python, Web & Robots", "Active"),
     ("certify", "GenAI & Prompting", "Microsoft & MTF Institute", "Certified"),
     ("creative", "Media & Design", "Video Editing & Graphics", "Certified"),
-    ("deploy", "Your team", "Software / Web / AI role", "now"),
+    ("deploy", "Your team", "Software / Web role", "now"),
 ]
 LOG = [  # (when, stage, passed, text)
     ("2024", "init", True, "BS Computer Science, COMSATS University Wah"),
     ("2025", "build", True, "shipped What Next?, Coloristan & Zenith C++ IDE"),
     ("2025", "certify", True, "Career Essentials in GenAI (Microsoft) & Prompt Eng (MTF)"),
     ("2026", "creative", True, "certified in Video Editing (Digiskills) & Design (Canva)"),
-    ("now", "deploy", False, "open to software, web & AI/ML opportunities"),
+    ("now", "deploy", False, "open to software & web opportunities"),
 ]
 
-METRICS = [("6+", "certifications earned across GenAI & Tech", "sunText"),
-           ("5+", "shipped web and software projects", "text"),
-           ("100%", "committed to building what matters", "text"),
-           ("3+", "core domains: Web Dev, Systems & Creative", "text")]
+# metrics are computed in build_metrics() from CERTS, PROJECTS and live GitHub data
+CORE_DOMAINS = "3+"
 
-PROJECTS = [  # slug, type, title, chip, featured, desc, stack, link text
+PROJECTS = [  # slug, type, title, chip, featured, desc, stack, repo, shipped
     ("whatnext", "ai", "What Next?", "BYOK AI", True,
      "Tell it what you finished and get your next career move, courses and reads powered by Groq AI.",
-     ["JavaScript", "Groq AI", "HTML5", "CSS3"]),
+     ["JavaScript", "Groq AI", "HTML5", "CSS3"], "what-s-next", True),
     ("coloristan", "web", "Coloristan", "color tool", True,
      "Offline color naming web app that matches any color using RGB Euclidean distance.",
-     ["HTML5", "CSS3", "JavaScript", "Algorithms"]),
+     ["HTML5", "CSS3", "JavaScript", "Algorithms"], "coloristan", True),
     ("zenith", "wasm", "Zenith C++ IDE", "in-browser", False,
-     "Zero-latency, serverless C++ IDE running entirely in-browser with WebAssembly.",
-     ["C++", "WebAssembly", "JavaScript"]),
-    ("robot", "robotics", "Self-Balancing Robot", "autonomous", False,
-     "Hardware and software robot maintaining autonomous balance using real-time sensor feedback.",
-     ["C++", "Arduino", "Embedded Systems"]),
+     "Near-instant, serverless C++ IDE running entirely in-browser with WebAssembly.",
+     ["C++", "WebAssembly", "JavaScript"], "zenith-cpp", True),
     ("deckydocu", "concept", "deckyDocu Concept", "AI defense", False,
      "Autonomous combat drone concept with AI fire control, adaptive stealth and swarm mission profiles.",
-     ["HTML5", "CSS3", "AI Research"]),
-    ("rps", "cli", "Rock Paper Scissors", "CLI game", False,
-     "Terminal game with clean game logic, randomized opponent moves and score tracking.",
-     ["C++", "CLI", "Game Logic"]),
+     ["HTML5", "CSS3", "AI Research"], "deckyDocu", False),  # concept, so not counted as shipped
 ]
-TYPE_COLOR = {"ai": "genai", "web": "dev", "wasm": "code", "robotics": "tools",
-              "concept": "genai", "cli": "code"}
+TYPE_COLOR = {"ai": "genai", "web": "dev", "wasm": "code", "concept": "genai"}
+
+EMAIL = "zakiulhassan105@gmail.com"
+
+STARTUP = dict(
+    title="Kitaabi Keera", role="Co-founder", chip="under construction",
+    desc="AI-powered exam prep for Pakistani board students (FBISE and Punjab Board, SSC and HSSC). "
+         "The name means bookworm in Urdu.",
+    stack=[])
+
+PORTFOLIO_URL = None  # set to your portfolio link; the card then shows it instead of "coming soon"
+CREATIVE = [  # (label, title, text, tags)
+    ("video", "Video editing", "Helped grow a YouTube channel to 20K+ subscribers. Digiskills certified.",
+     ["CapCut", "YouTube", "Videography"]),
+    ("design", "Graphic design", "Brand identity, banners and social posts, including the Kitaabi Keera brand.",
+     ["Illustrator", "Canva"]),
+    ("lead", "Team lead", "Graphics team lead at ZKF, a non-profit.", ["ZKF", "Leadership"]),
+]
+
+OPEN_TO = ["Software", "Web"]
+ASK_ME = ["Web Dev", "WebAssembly", "Prompt Engineering", "Graphic Design", "Video Editing"]
 
 ENDPOINTS = [("university", "GET", "/university", "COMSATS Wah", False),
              ("linkedin", "GET", "/linkedin", "in/zakiuh", False),
              ("github", "GET", "/github", "zakiuhh", False),
-             ("contact", "POST", "/contact", "zakiulhassan105@gmail.com", True)]
+             ("contact", "POST", "/contact", EMAIL, True)]
 
 CERTS = ["microsoft-generative-ai-career-essentials", "mtf-prompt-engineering-professional",
          "nasba-ethics-in-genai", "digiskills-video-editing", "canva-graphics-designing"]
@@ -215,25 +230,135 @@ def pulse_dot(cx, cy, color, r=4.5):
 
 # ═══════════════════════════════ DATA ═══════════════════════════════
 
-def contributions():
-    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
-    cache = DATA / "contributions.json"
-    if token:
-        try:
-            q = "query($l:String!){user(login:$l){contributionsCollection{contributionCalendar{totalContributions}}}}"
-            req = urllib.request.Request("https://api.github.com/graphql",
-                                         data=json.dumps({"query": q, "variables": {"l": USER}}).encode(),
-                                         headers={"Authorization": f"bearer {token}"})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                n = json.load(r)["data"]["user"]["contributionsCollection"]["contributionCalendar"]["totalContributions"]
-            DATA.mkdir(exist_ok=True)
-            cache.write_text(json.dumps({"total": n, "updated": date.today().isoformat()}))
-            return n
-        except Exception as ex:
-            print("contribution fetch failed:", ex)
-    if cache.exists():
-        return json.loads(cache.read_text())["total"]
+API = "https://api.github.com"
+CACHE = DATA / "github.json"
+
+
+def token():
+    return os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+
+
+def _request(url, payload=None):
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": f"{USER}-profile-builder"}
+    if token():
+        headers["Authorization"] = f"Bearer {token()}"
+    data = json.dumps(payload).encode() if payload is not None else None
+    req = urllib.request.Request(url, data=data, headers=headers)
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+
+
+def fetch_profile():
+    u = _request(f"{API}/users/{USER}")
+    return {"public_repos": u["public_repos"], "followers": u["followers"]}
+
+
+def fetch_repos():
+    repos = _request(f"{API}/users/{USER}/repos?per_page=100&type=owner&sort=pushed")
+    return [{"name": r["name"], "stars": r["stargazers_count"], "language": r["language"],
+             "pushed_at": r["pushed_at"], "fork": r["fork"]} for r in repos]
+
+
+def simplify_event(e):
+    """Reduce a raw public event to the few fields the activity card needs, or None to skip it."""
+    kind, p = e.get("type"), e.get("payload") or {}
+    repo = (e.get("repo") or {}).get("name", "").split("/")[-1]
+    when = e.get("created_at")
+    if kind == "PushEvent":
+        commits = p.get("commits") or []
+        n = p.get("size") or len(commits) or 1
+        msg = (commits[-1].get("message") or "").splitlines()[0] if commits else ""
+        text = msg or f"pushed {n} commit{'s' if n != 1 else ''}"
+        if msg and n > 1:
+            text += f" (+{n - 1} more)"
+        return {"kind": "push", "repo": repo, "when": when, "text": text}
+    if kind == "PullRequestEvent":
+        pr = p.get("pull_request") or {}
+        action = "merged" if pr.get("merged") else p.get("action", "updated")
+        return {"kind": "pr", "repo": repo, "when": when, "text": f"{action} PR: {pr.get('title', '')}".strip()}
+    if kind == "CreateEvent" and p.get("ref_type") == "repository":
+        return {"kind": "new", "repo": repo, "when": when, "text": "created repository"}
     return None
+
+
+def fetch_events():
+    raw = _request(f"{API}/users/{USER}/events/public?per_page=50")
+    return [ev for ev in map(simplify_event, raw) if ev][:5]
+
+
+def fetch_contributions():
+    if not token():
+        raise RuntimeError("no token, skipping contribution count")
+    q = "query($l:String!){user(login:$l){contributionsCollection{contributionCalendar{totalContributions}}}}"
+    out = _request(f"{API}/graphql", {"query": q, "variables": {"l": USER}})
+    return out["data"]["user"]["contributionsCollection"]["contributionCalendar"]["totalContributions"]
+
+
+def load_github():
+    """Fetch live data, falling back per key to the cached copy. Returns a dict (keys may be missing)."""
+    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    data = dict(cache)
+    for key, fn in [("profile", fetch_profile), ("repos", fetch_repos),
+                    ("events", fetch_events), ("contributions", fetch_contributions)]:
+        try:
+            data[key] = fn()
+        except Exception as ex:
+            print(f"{key}: live fetch failed ({ex}); using cache" if key in cache else
+                  f"{key}: live fetch failed ({ex}); no cache yet")
+    if data != cache:  # only touch the file when something changed, so Actions commits stay meaningful
+        DATA.mkdir(exist_ok=True)
+        CACHE.write_text(json.dumps(data, indent=1, sort_keys=True))
+    return data
+
+
+def repo_info(data, name):
+    for r in data.get("repos") or []:
+        if r["name"].lower() == name.lower():
+            return r
+    return None
+
+
+def ago(iso, long=False):
+    d = datetime.now(timezone.utc) - datetime.fromisoformat(iso.replace("Z", "+00:00"))
+    sec = int(d.total_seconds())
+    if sec < 3600:
+        n, unit = max(sec // 60, 1), "m"
+    elif sec < 86400:
+        n, unit = sec // 3600, "h"
+    else:
+        n, unit = sec // 86400, "d"
+    if not long:
+        return f"{n}{unit}"
+    if unit == "d" and n < 1:
+        return "today"
+    return "today" if unit != "d" else f"{n}d ago"
+
+
+def clip(s, width, fam="sg", w=400, size=14):
+    if measure(s, fam, w, size) <= width:
+        return s
+    while s and measure(s + "…", fam, w, size) > width:
+        s = s[:-1]
+    return s.rstrip() + "…"
+
+
+def star(cx, cy, r, color):
+    """Small five-point star (the fonts have no ★ glyph)."""
+    pts = []
+    for i in range(10):
+        ang = -math.pi / 2 + i * math.pi / 5
+        rad = r if i % 2 == 0 else r * 0.42
+        pts.append(f"{cx + rad * math.cos(ang):.1f},{cy + rad * math.sin(ang):.1f}")
+    return f'<polygon points="{" ".join(pts)}" fill="{color}"/>'
+
+
+def build_metrics(data):
+    shipped = sum(1 for p in PROJECTS if p[8])
+    total = data.get("contributions")
+    return [(str(len(CERTS)), "certifications earned across GenAI & Tech", "sunText"),
+            (str(shipped), "shipped web and software projects", "text"),
+            (f"{total:,}" if total is not None else "n/a", "contributions on GitHub this year", "text"),
+            (CORE_DOMAINS, "core domains: Web Dev, Systems & Creative", "text")]
 
 
 # ═══════════════════════════════ SECTIONS ═══════════════════════════════
@@ -264,7 +389,7 @@ def hero(t):
     s.add(pulse_dot(64, py + 18, t["ok"]))
     s.text(78, py + 22.5, STATUS, t["okText"], 13, "jb")
     lx = 44
-    for ring, label in (("code", "languages"), ("dev", "dev · ai"), ("tools", "tools · creative")):
+    for ring, label in (("code", "languages"), ("dev", "dev"), ("tools", "tools · creative")):
         s.add(f'<circle cx="{lx+4}" cy="{py+66}" r="4" fill="{t[ring]}"/>')
         s.text(lx + 14, py + 70, label, t["muted"], 12, "jb")
         lx += measure(label, "jb", 400, 12) + 36
@@ -358,11 +483,11 @@ def pipeline(t, total):
     return s.render()
 
 
-def metrics(t):
+def metrics(t, items):
     W, H = 880, 132
-    s = SVG(W, H, ". ".join(f"{v} {l}" for v, l, _ in METRICS))
+    s = SVG(W, H, ". ".join(f"{v} {l}" for v, l, _ in items))
     w = (W - 42) / 4
-    for i, (value, label, col) in enumerate(METRICS):
+    for i, (value, label, col) in enumerate(items):
         x = i * (w + 14)
         s.add(card(x, 0, w, H, t["surface"], t["line"], 16))
         s.text(x + 20, 58, value, t[col], 40, w=700, ls=-0.8)
@@ -373,7 +498,7 @@ def metrics(t):
     return s.render()
 
 
-def project(t, typ, title, chip, featured, desc, stack, linked):
+def project(t, typ, title, chip, featured, desc, stack, linked, live=None):
     W, H = 432, 252
     s = SVG(W, H, f"{title}: {desc} Built with {', '.join(stack)}.")
     s.add(card(0, 0, W, H, t["surface"], t["sun"] if featured else t["line"], 16))
@@ -402,6 +527,185 @@ def project(t, typ, title, chip, featured, desc, stack, linked):
     if linked:
         s.add(f'<path d="M{lx:.1f} {233-1} l7 -7 M{lx+1.5:.1f} {226} h5.5 v5.5" fill="none" stroke="{t["accent"]}" '
               f'stroke-width="1.6" stroke-linecap="round"/>')
+    if live:  # live repo data, right-aligned: stars, main language, last push
+        avail = W - 24 - (lx + 24) - 12
+        stars = live["stars"]
+        parts = ([live["language"]] if live.get("language") else []) + [f"updated {ago(live['pushed_at'], True)}"]
+        for drop_lang in (False, True):
+            use = parts[1:] if drop_lang else parts
+            txt = " · ".join(use)
+            sw = 14 if stars else 0
+            if measure(txt, "jb", 400, 11.5) + sw + (measure(str(stars), "jb", 400, 11.5) + 6 if stars else 0) <= avail:
+                break
+        right = W - 24
+        s.text(right, 233, txt, t["faint"], 11.5, "jb", anchor="end")
+        if stars:
+            sx = right - measure(txt, "jb", 400, 11.5) - 14
+            s.text(sx, 233, str(stars), t["faint"], 11.5, "jb", anchor="end")
+            s.add(star(sx - measure(str(stars), "jb", 400, 11.5) - 8, 229, 5.5, t["sun"]))
+    return s.render()
+
+
+def stats(t, data):
+    W, H = 880, 200
+    w = (W - 16) / 2
+    prof, repos = data.get("profile"), data.get("repos")
+    own = [r for r in (repos or []) if not r["fork"]]
+    stars = sum(r["stars"] for r in own) if repos is not None else None
+    n_repos = prof["public_repos"] if prof else None
+    contrib = data.get("contributions")
+    langs = defaultdict(int)
+    for r in own:
+        if r["language"]:
+            langs[r["language"]] += 1
+    top = sorted(langs.items(), key=lambda kv: (-kv[1], kv[0]))[:4]
+    tot = sum(langs.values()) or 1
+    fmt = lambda v: "n/a" if v is None else f"{v:,}"
+    cells = [(fmt(n_repos), "public repos", "accent"), (fmt(stars), "stars earned", "sunText"),
+             (fmt(contrib), "contributions this year", "ml")]
+    label = (f"GitHub stats. Public repos: {fmt(n_repos)}. Stars earned: {fmt(stars)}. "
+             f"Contributions this year: {fmt(contrib)}. Top languages by repo: "
+             + (", ".join(f"{k} {round(v * 100 / tot)}%" for k, v in top) or "no data yet") + ".")
+    s = SVG(W, H, label)
+    s.add(card(0, 0, w, H, t["surface"], t["line"], 16))
+    s.text(24, 38, f"stats / {USER}", t["faint"], 12, "jb")
+    cw = (w - 48) / 3
+    for i, (value, lab, col) in enumerate(cells):
+        x = 24 + i * cw
+        s.text(x, 104, value, t[col], 36, w=700, ls=-0.8)
+        y = 132
+        for line in wrap(lab, cw - 12, "sg", 400, 13.5)[:2]:
+            s.text(x, y, line, t["muted"], 13.5)
+            y += 19
+    x0 = w + 16
+    s.add(card(x0, 0, w, H, t["surface"], t["line"], 16))
+    s.text(x0 + 24, 38, "stats / top languages (by repo)", t["faint"], 12, "jb")
+    colors = [t["genai"], t["dev"], t["tools"], t["sun"]]
+    track_x, track_w = x0 + 128, w - 128 - 24 - 56
+    if not top:
+        s.text(x0 + 24, 90, "no language data yet", t["muted"], 14)
+    for i, (lang, n) in enumerate(top):
+        y = 76 + i * 30
+        pct = n / tot
+        s.text(x0 + 24, y + 9, lang, t["text"], 12.5, "jb")
+        s.add(f'<rect x="{track_x:.1f}" y="{y}" width="{track_w:.1f}" height="9" rx="4.5" fill="{t["track"]}"/>')
+        s.add(f'<rect x="{track_x:.1f}" y="{y}" width="{max(track_w * pct, 9):.1f}" height="9" rx="4.5" fill="{colors[i]}"/>')
+        s.text(x0 + w - 24, y + 9, f"{round(pct * 100)}%", t["muted"], 12.5, "jb", anchor="end")
+    return s.render()
+
+
+ACTIVITY_COLOR = {"push": "ml", "pr": "genai", "new": "sunText"}
+
+
+def activity(t, events):
+    W = 880
+    events = events or []
+    rows = max(len(events), 1)
+    H = 70 + rows * 30 + 14
+    s = SVG(W, H, "Recent public GitHub activity: " +
+            ("; ".join(f"{e['kind']} in {e['repo']}, {e['text']}" for e in events) or "none yet") + ".")
+    s.add(card(0, 0, W, H, t["surface"], t["line"], 18))
+    s.text(28, 40, f"last {len(events) or 0} public events  ·  github.com/{USER}", t["faint"], 12, "jb")
+    s.add(card(28, 56, W - 56, rows * 30 + 18, t["log"], t["line"], 12))
+    if not events:
+        s.text(48, 56 + 30, "no recent public activity", t["muted"], 12.5, "jb")
+        return s.render()
+    for i, e in enumerate(events):
+        y = 56 + 30 + i * 30 - 4
+        s.text(48, y, f"[{ago(e['when'])}]", t["faint"], 12.5, "jb")
+        s.text(112, y, e["kind"], t[ACTIVITY_COLOR[e["kind"]]], 12.5, "jb")
+        s.text(166, y, clip(e["repo"], 138, "jb", 400, 12.5), t["muted"], 12.5, "jb")
+        s.text(330, y, clip(e["text"], W - 28 - 330 - 20, "jb", 400, 12.5), t["text"], 12.5, "jb")
+    return s.render()
+
+
+def chip_tags(s, t, items, x0, y, max_x, dashed=False):
+    """Lay out tag chips left to right, wrapping at max_x. Returns the y of the bottom edge."""
+    x = x0
+    for item in items:
+        tw = measure(item, "sg", 400, 14) + 24 if dashed else measure(item, "jb", 400, 11.5) + 18
+        h = 33 if dashed else 24
+        if x + tw > max_x and x > x0:
+            x, y = x0, y + h + 9
+        if dashed:
+            s.add(f'<rect x="{x+.5:.1f}" y="{y+.5}" width="{tw-1:.1f}" height="{h}" rx="8" fill="none" '
+                  f'stroke="{t["line2"]}" stroke-dasharray="4 3"/>')
+            s.text(x + 12, y + 22, item, t["text"], 14)
+        else:
+            s.add(f'<rect x="{x:.1f}" y="{y}" width="{tw:.1f}" height="{h}" rx="6" fill="{t["chip"]}"/>')
+            s.text(x + 9, y + 16, item, t["muted"], 11.5, "jb")
+        x += tw + (8 if dashed else 6)
+    return y + (33 if dashed else 24)
+
+
+def startup(t):
+    W = 880
+    d = STARTUP
+    s = SVG(W, 240, f"{d['title']}, {d['role']}. {d['desc']} Status: {d['chip']}." +
+            (f" Built with {', '.join(d['stack'])}." if d["stack"] else ""))
+    s.text(28, 42, f"startup / {d['role'].lower()}", t["genai"], 12, "jb")
+    cw = measure(d["chip"], "jb", 400, 11.5) + 20
+    s.add(f'<rect x="{W-28-cw:.1f}" y="26" width="{cw:.1f}" height="24" rx="12" fill="{t["sun"]}"/>')
+    s.text(W - 28 - cw / 2, 42, d["chip"], t["sunInk"], 11.5, "jb", anchor="middle")
+    s.text(28, 90, d["title"], t["text"], 32, w=700, ls=-0.5)
+    y = 122
+    for line in wrap(d["desc"], 680, "sg", 400, 15.5)[:3]:
+        s.text(28, y, line, t["muted"], 15.5)
+        y += 23
+    bottom = chip_tags(s, t, d["stack"], 28, y + 6, W - 28) if d["stack"] else y - 10
+    sy = bottom + 20
+    H = sy + 8 + 26
+    s.body.insert(0, card(0, 0, W, H, t["surface"], t["sun"], 18))
+    s.add(f'<defs><pattern id="hz" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+          f'<rect width="9" height="18" fill="{t["sun"]}"/><rect x="9" width="9" height="18" fill="{t["chip"]}"/>'
+          f'<animate attributeName="x" from="0" to="18" dur="1.4s" repeatCount="indefinite"/></pattern></defs>'
+          f'<rect x="28" y="{sy}" width="{W-56}" height="8" rx="4" fill="url(#hz)" opacity=".9"/>')
+    s.h = H
+    return s.render()
+
+
+def creative(t):
+    W, H = 880, 236
+    s = SVG(W, H, "Creative work: " + " ".join(f"{ti}. {tx}" for _, ti, tx, _ in CREATIVE) +
+            (" Portfolio link available." if PORTFOLIO_URL else " Portfolio coming soon."))
+    n = len(CREATIVE)
+    w = (W - 16 * (n - 1)) / n
+    cols = ["genai", "dev", "tools"]
+    for i, (kind, title, text, tags) in enumerate(CREATIVE):
+        x = i * (w + 16)
+        s.add(card(x, 0, w, 194, t["surface"], t["line"], 16))
+        s.text(x + 22, 36, f"creative / {kind}", t[cols[i % 3]], 12, "jb")
+        s.text(x + 22, 70, title, t["text"], 20, w=700, ls=-0.2)
+        y = 96
+        for line in wrap(text, w - 44, "sg", 400, 13.5)[:3]:
+            s.text(x + 22, y, line, t["muted"], 13.5)
+            y += 19
+        chip_tags(s, t, tags, x + 22, 150, x + w - 22)
+    note = "portfolio  ·  " + (PORTFOLIO_URL.replace("https://", "").replace("http://", "") if PORTFOLIO_URL else "coming soon")
+    s.text(4, 224, note, t["accent"] if PORTFOLIO_URL else t["faint"], 12.5, "jb")
+    return s.render()
+
+
+def openwork(t):
+    W, H = 880, 200
+    w = (W - 16) / 2
+    s = SVG(W, H, "Open to opportunities in " + ", ".join(OPEN_TO) + " roles. Ask me about: " + ", ".join(ASK_ME) +
+            f". Best way to reach me: {EMAIL}.")
+    s.add(card(0, 0, w, H, t["surface"], t["ok"], 16))
+    s.text(24, 40, "$", t["accent"], 14, "jb", 500)
+    s.text(40, 40, "cat open_to.txt", t["text"], 14, "jb", 500)
+    label = "open to opportunities"
+    pw = measure(label, "jb", 400, 13) + 50
+    s.add(f'<rect x="24.5" y="60.5" width="{pw:.0f}" height="35" rx="17.5" fill="{t["okBg"]}" stroke="{t["okLine"]}"/>')
+    s.add(pulse_dot(44, 78, t["ok"]))
+    s.text(58, 82.5, label, t["okText"], 13, "jb")
+    bottom = chip_tags(s, t, [f"{r} roles" for r in OPEN_TO], 24, 110, w - 24)
+    s.text(24, bottom + 30, f"best way to reach me: {EMAIL}", t["muted"], 12.5, "jb")
+    x0 = w + 16
+    s.add(card(x0, 0, w, H, t["surface"], t["line"], 16))
+    s.text(x0 + 24, 40, "$", t["accent"], 14, "jb", 500)
+    s.text(x0 + 40, 40, "man ask_me_about", t["text"], 14, "jb", 500)
+    chip_tags(s, t, ASK_ME, x0 + 24, 64, x0 + w - 24, dashed=True)
     return s.render()
 
 
@@ -455,19 +759,29 @@ def extras(t):
 
 def main():
     ASSETS.mkdir(exist_ok=True)
-    total = contributions()
+    data = load_github()
+    total = data.get("contributions")
+    items = build_metrics(data)
+    keep = set()
     for name, t in THEMES.items():
         out = {f"hero-{name}.svg": hero(t), f"facts-{name}.svg": facts(t),
-               f"pipeline-{name}.svg": pipeline(t, total), f"metrics-{name}.svg": metrics(t),
-               f"extras-{name}.svg": extras(t)}
-        for slug, typ, title, chip, feat, desc, stack in PROJECTS:
+               f"pipeline-{name}.svg": pipeline(t, total), f"metrics-{name}.svg": metrics(t, items),
+               f"stats-{name}.svg": stats(t, data), f"activity-{name}.svg": activity(t, data.get("events")),
+               f"startup-{name}.svg": startup(t), f"creative-{name}.svg": creative(t),
+               f"openwork-{name}.svg": openwork(t), f"extras-{name}.svg": extras(t)}
+        for slug, typ, title, chip, feat, desc, stack, repo, _shipped in PROJECTS:
             out[f"project-{slug}-{name}.svg"] = project(t, typ, title, chip, feat, desc, stack,
-                                                         slug in ("whatnext", "coloristan", "zenith", "deckydocu"))
+                                                         bool(repo), repo_info(data, repo) if repo else None)
         for slug, method, route, value, hot in ENDPOINTS:
             out[f"endpoint-{slug}-{name}.svg"] = endpoint(t, method, route, value, hot)
         for fn, svg in out.items():
             (ASSETS / fn).write_text(svg, encoding="utf-8")
-    print(f"built {len(out) * 2} SVGs (contributions: {total if total is not None else 'n/a'})")
+        keep.update(out)
+    for stale in ASSETS.glob("*.svg"):  # drop SVGs for anything removed from CONTENT
+        if stale.name not in keep:
+            stale.unlink()
+            print("removed stale", stale.name)
+    print(f"built {len(keep)} SVGs (contributions: {total if total is not None else 'n/a'})")
 
 
 if __name__ == "__main__":
