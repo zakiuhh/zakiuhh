@@ -1,6 +1,18 @@
 {
- "contributions": 426,
+ "contributions": 433,
  "events": [
+  {
+   "kind": "push",
+   "repo": "tagsor",
+   "text": "pushed 1 commit",
+   "when": "2026-11-12T17:39:25Z"
+  },
+  {
+   "kind": "push",
+   "repo": "tagsor",
+   "text": "pushed 1 commit",
+   "when": "2026-11-12T17:34:28Z"
+  },
   {
    "kind": "push",
    "repo": "zakiuhh",
@@ -12,30 +24,25 @@
    "repo": "stash-app",
    "text": "pushed 1 commit",
    "when": "2026-10-19T08:06:56Z"
-  },
-  {
-   "kind": "push",
-   "repo": "uni-magagement",
-   "text": "pushed 1 commit",
-   "when": "2026-10-11T21:59:40Z"
-  },
-  {
-   "kind": "push",
-   "repo": "uni-magagement",
-   "text": "pushed 1 commit",
-   "when": "2026-10-11T20:48:13Z"
   }
  ],
  "profile": {
   "followers": 11,
-  "public_repos": 28
+  "public_repos": 29
  },
  "repos": [
   {
    "fork": false,
+   "language": "C#",
+   "name": "tagsor",
+   "pushed_at": "2026-11-12T18:04:53Z",
+   "stars": 0
+  },
+  {
+   "fork": false,
    "language": "Python",
    "name": "zakiuhh",
-   "pushed_at": "2026-11-11T10:51:35Z",
+   "pushed_at": "2026-11-12T10:59:40Z",
    "stars": 0
   },
   {
